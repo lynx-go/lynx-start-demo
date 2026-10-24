@@ -8,5 +8,11 @@ data:
     max_open_conns: 8
 
 # lynx-start:config-fragment（lynx-start add 追加模块配置段的锚点，勿删）
+# --- module: identity ---
+identity:
+  secret: "dev-only-identity-secret-change-me"  # 令牌主密钥，生产必须更换
+  token_ttl: 30m   # 无吊销机制（v0.1），保持短时效
+  issuer: lynx-start
+
 # --- module: demo ---
 

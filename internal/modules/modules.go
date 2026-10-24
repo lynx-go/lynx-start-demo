@@ -6,6 +6,7 @@ import (
 	"github.com/lynx-go/lynx-start/kernel"
 
 	demo "github.com/lynx-go/lynx-start-demo/internal/api/demo"
+	identity "github.com/lynx-go/lynx-start-demo/internal/api/identity"
 	// lynx-start:module-import（lynx-start add 注入锚点，勿删）
 )
 
@@ -15,6 +16,10 @@ func Installed() []kernel.InstalledModule {
 		{
 			Module:   demo.Module(),
 			Assemble: demo.Assemble,
+		},
+		{
+			Module:   identity.Module(),
+			Assemble: identity.Assemble,
 		},
 		// lynx-start:module-entry（lynx-start add 注入锚点，勿删）
 	}
