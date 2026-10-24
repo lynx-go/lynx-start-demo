@@ -22,7 +22,7 @@ mise run dev          # gRPC :9060 / HTTP :8080
 ## 添加模块
 
 ```bash
-lyx add <module>
+lynx-start add <module>
 ```
 
 ## 配置

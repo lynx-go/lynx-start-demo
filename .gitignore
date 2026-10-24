@@ -1,2 +1,5 @@
 bin/
 .env
+.idea/
+.vscode/
+.zcode/
