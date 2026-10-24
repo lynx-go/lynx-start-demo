@@ -7,7 +7,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/lynx-go/lynx-start-demo/internal/domain/demo"
+	"github.com/lynx-go/lynx-start-demo/domain/demo"
 	"github.com/lynx-go/lynx-start/kernel/uow/buntx"
 	"github.com/uptrace/bun"
 )

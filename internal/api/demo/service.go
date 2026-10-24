@@ -13,7 +13,7 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"github.com/lynx-go/lynx-start-demo/internal/domain/demo"
+	"github.com/lynx-go/lynx-start-demo/domain/demo"
 )
 
 // Service 实现 DemoService（薄转发：参数校验交给 protovalidate，业务在用例层）。

@@ -2,28 +2,37 @@ package identity
 
 import (
 	"context"
+	"errors"
 
 	appidentity "github.com/lynx-go/lynx-start-demo/internal/app/identity"
 
 	"github.com/lynx-go/grpcapi/authn"
 	"github.com/lynx-go/grpcapi/principal"
+	"github.com/lynx-go/lynx-start/kernel/clock"
+	"github.com/lynx-go/lynx-start/kernel/jwt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 // BearerAuthenticator 把 Authorization: Bearer <token> 变成 Principal
 // （grpcapi authn SPI），是本模块对整个应用的横切贡献——其他模块的
-// 方法只要不声明 anonymous，就自动要求本认证器注入的 principal。
+// 方法只要不声明 anonymous，就自动要求 principal。
 //
-// SPI 约定：(nil, nil) = 不认识这种凭证族（非 Bearer），链上继续尝试
-// 下一个认证器；(nil, err) = 认识但拒绝。
+// 链式语义（多模块令牌共存的关键）：签名不匹配/非 JWT 形态 = 不是本
+// 模块签发的令牌，返回 (nil, nil) 交给链上下一个认证器（如 session
+// 模块）；签名有效但过期/未生效 = 是本模块的令牌但已失效，立即拒绝。
 type BearerAuthenticator struct {
-	uc *appidentity.UseCase
+	uc       *appidentity.UseCase
+	verifier *jwt.Verifier
+	now      clock.Clock
 }
 
 // NewBearerAuthenticator 构造认证器（Assemble 调用）。
-func NewBearerAuthenticator(uc *appidentity.UseCase) *BearerAuthenticator {
-	return &BearerAuthenticator{uc: uc}
+func NewBearerAuthenticator(uc *appidentity.UseCase, verifier *jwt.Verifier, c clock.Clock) *BearerAuthenticator {
+	if c == nil {
+		c = clock.System{}
+	}
+	return &BearerAuthenticator{uc: uc, verifier: verifier, now: c}
 }
 
 var _ authn.Authenticator = (*BearerAuthenticator)(nil)
@@ -37,8 +46,20 @@ func (a *BearerAuthenticator) Authenticate(ctx context.Context, c authn.Credenti
 	if token == "" {
 		return nil, nil // 非 Bearer 凭证：交给链上下一个认证器
 	}
-	user, err := a.uc.Authenticate(ctx, token)
+	claims, err := a.verifier.Verify(token, a.now.Now())
 	if err != nil {
+		switch {
+		case errors.Is(err, jwt.ErrBadSig), errors.Is(err, jwt.ErrMalformed):
+			return nil, nil // 不是本模块签发的令牌：继续链
+		case errors.Is(err, jwt.ErrExpired):
+			return nil, status.Error(codes.Unauthenticated, "access token expired")
+		default:
+			return nil, status.Error(codes.Unauthenticated, "invalid access token")
+		}
+	}
+	user, err := a.uc.ResolveUser(ctx, claims.Subject)
+	if err != nil {
+		// 用户不存在/已停用：不泄露细节，按无效令牌拒绝。
 		return nil, status.Error(codes.Unauthenticated, "invalid access token")
 	}
 	return &principal.Principal{

@@ -40,6 +40,7 @@ func NewDeps(app lynx.App, cfg *config.Config, logger *slog.Logger) (kernel.Deps
 		DB:     db,
 		Tx:     buntx.New(db),
 		Events: events.NewBusPublisher(app.Bus()),
+		Bus:    app.Bus(),
 		Config: app.Config(),
 		Logger: logger,
 	}

@@ -6,9 +6,9 @@ import (
 	"context"
 	"errors"
 
+	"github.com/lynx-go/lynx-start-demo/domain/identity"
 	identityv1 "github.com/lynx-go/lynx-start-demo/genproto/identity/v1"
 	appidentity "github.com/lynx-go/lynx-start-demo/internal/app/identity"
-	"github.com/lynx-go/lynx-start-demo/internal/domain/identity"
 
 	"github.com/lynx-go/grpcapi/principal"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"

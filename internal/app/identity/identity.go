@@ -7,7 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/lynx-go/lynx-start-demo/internal/domain/identity"
+	"github.com/lynx-go/lynx-start-demo/domain/identity"
 	"github.com/lynx-go/lynx-start/kernel/clock"
 	"github.com/lynx-go/lynx-start/kernel/events"
 	"github.com/lynx-go/lynx-start/kernel/idgen"
@@ -137,6 +137,20 @@ func (u *UseCase) Authenticate(ctx context.Context, accessToken string) (*identi
 // GetMe 按主体 ID 取当前用户。
 func (u *UseCase) GetMe(ctx context.Context, userID string) (*identity.User, error) {
 	return u.repo.GetByID(ctx, userID)
+}
+
+// ResolveUser 按主体 ID 取可用用户（认证器消费：不存在或停用即拒绝，
+// 与 Authenticate 的 fail-closed 回读同语义，但不做令牌验证——验证归
+// 认证器，便于多模块令牌共存时区分「不是我的令牌」与「我的令牌坏了」）。
+func (u *UseCase) ResolveUser(ctx context.Context, userID string) (*identity.User, error) {
+	user, err := u.repo.GetByID(ctx, userID)
+	if err != nil {
+		return nil, err
+	}
+	if !user.IsActive() {
+		return nil, identity.ErrUserDisabled
+	}
+	return user, nil
 }
 
 // ChangePassword 验旧换新并发布事件。旧令牌在过期前仍有效（见领域注释）。

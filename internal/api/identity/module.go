@@ -59,7 +59,7 @@ func Assemble(deps kernel.Deps) (kernel.Assembly, error) {
 	uc := appidentity.New(repo, deps.Tx, deps.Events, signer, verifier, clock.System{})
 	return kernel.Assembly{
 		Registrations:  []server.Registration{newRegistration(NewService(uc))},
-		Authenticators: []authn.Authenticator{NewBearerAuthenticator(uc)},
+		Authenticators: []authn.Authenticator{NewBearerAuthenticator(uc, verifier, clock.System{})},
 	}, nil
 }
 

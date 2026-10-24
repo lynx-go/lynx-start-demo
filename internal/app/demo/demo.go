@@ -5,7 +5,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/lynx-go/lynx-start-demo/internal/domain/demo"
+	"github.com/lynx-go/lynx-start-demo/domain/demo"
 	"github.com/lynx-go/lynx-start/kernel/crud"
 	"github.com/lynx-go/lynx-start/kernel/events"
 	"github.com/lynx-go/lynx-start/kernel/idgen"

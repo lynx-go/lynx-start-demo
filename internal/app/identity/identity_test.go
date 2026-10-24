@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/lynx-go/lynx-start-demo/internal/domain/identity"
+	"github.com/lynx-go/lynx-start-demo/domain/identity"
 	"github.com/lynx-go/lynx-start/kernel/clock"
 	"github.com/lynx-go/lynx-start/kernel/events"
 	"github.com/lynx-go/lynx-start/kernel/jwt"
