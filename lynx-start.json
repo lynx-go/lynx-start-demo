@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "name": "lynx-start-demo",
+  "modulePath": "github.com/lynx-go/lynx-start-demo",
+  "registry": "/home/qiulin/workspace/qiulin/lynx-start",
+  "modules": [
+    {
+      "name": "demo",
+      "version": "0.1.0"
+    }
+  ]
+}

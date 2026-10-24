@@ -1,0 +1,22 @@
+version: v2
+
+deps:
+  - buf.build/googleapis/googleapis
+modules:
+  - path: proto
+lint:
+  use:
+    - STANDARD
+  except:
+    - PACKAGE_DIRECTORY_MATCH
+    # AIP-131/133 风格：资源直出为响应（Get/Create 返回 Item 而非
+    # XxxResponse 包裹），请求/响应名不唯一属既定风格（torchwood 同款取舍）。
+    - RPC_REQUEST_RESPONSE_UNIQUE
+    - RPC_RESPONSE_STANDARD_NAME
+breaking:
+  use:
+    - FILE
+  # vendored grpcapi policy.proto：声明语法归库持有，不做上游 breaking 比较，
+  # 生成侧经 buf.gen.yaml 排除（Go 类型由 grpcapi/genproto 提供）。
+  ignore:
+    - proto/grpcapi/v1/policy.proto

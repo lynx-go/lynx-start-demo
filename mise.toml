@@ -1,0 +1,47 @@
+# lynx-start-demo 开发任务（mise）
+#
+#   mise install   安装钉版工具链（go / buf）
+#   mise tasks     列出全部任务
+
+[tools]
+go = "1.26.8"
+buf = "1.65.0"
+golangci-lint = "2.12.2"
+
+[task_config]
+shell = "sh -o errexit -c"
+
+[tasks."db:up"]
+description = "启动本地 Postgres（docker compose）"
+run = "docker compose up -d db"
+
+[tasks."db:down"]
+description = "停止本地 Postgres"
+run = "docker compose down"
+
+[tasks."db:migrate"]
+description = "执行全部已装模块的迁移链（独立版本表；DSN 取 LYNX_START_DEMO_DATA_DATABASE_SOURCE，缺省读 config.yaml 同款默认）"
+run = "go run ./cmd/migrate"
+
+[tasks.generate]
+description = "buf lint + generate（genproto/**）"
+run = ["buf dep update", "buf lint", "buf generate"]
+
+[tasks.dev]
+description = "启动 server"
+run = "go run ./cmd/server"
+
+[tasks.build]
+description = "构建 server 与 migrate"
+run = ["go build -o ./bin/server ./cmd/server", "go build -o ./bin/migrate ./cmd/migrate"]
+
+[tasks.test]
+description = "全量测试"
+run = "go test ./... -race"
+
+[tasks.lint]
+description = "golangci-lint + gofmt 漂移检查"
+run = '''
+golangci-lint run ./...
+test -z "$(gofmt -l .)"
+'''

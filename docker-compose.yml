@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: lynx_start_demo
+      POSTGRES_PASSWORD: lynx_start_demo
+      POSTGRES_DB: lynx_start_demo
+    ports:
+      # 宿主端口可经 POSTGRES_PORT 覆盖（与既有 5432 服务共存时）。
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lynx_start_demo"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  pgdata:
