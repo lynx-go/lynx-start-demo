@@ -3,14 +3,13 @@ package demo
 
 import (
 	"context"
-	"crypto/rand"
-	"encoding/hex"
 	"time"
 
+	"github.com/lynx-go/lynx-start-demo/internal/domain/demo"
 	"github.com/lynx-go/lynx-start/kernel/crud"
 	"github.com/lynx-go/lynx-start/kernel/events"
+	"github.com/lynx-go/lynx-start/kernel/idgen"
 	"github.com/lynx-go/lynx-start/kernel/uow"
-	"github.com/lynx-go/lynx-start-demo/internal/domain/demo"
 )
 
 // UseCase 是样例模块的用例集。
@@ -30,7 +29,7 @@ func New(repo demo.Repository, tx uow.Runner, publisher events.Publisher) *UseCa
 func (u *UseCase) Create(ctx context.Context, title string) (*demo.Item, error) {
 	var out *demo.Item
 	err := u.tx.Run(ctx, func(ctx context.Context) error {
-		item, err := demo.NewItem(newID(), title, u.now().UTC())
+		item, err := demo.NewItem(idgen.New(), title, u.now().UTC())
 		if err != nil {
 			return err
 		}
@@ -122,12 +121,3 @@ func envelope(name string, item *demo.Item) events.Envelope {
 }
 
 func quote(s string) string { return `"` + s + `"` }
-
-// newID 生成 128bit 随机 hex ID（样例模块自足实现；真实模块可用 idgen 端口）。
-func newID() string {
-	var b [16]byte
-	if _, err := rand.Read(b[:]); err != nil {
-		panic("demo: rand: " + err.Error())
-	}
-	return hex.EncodeToString(b[:])
-}

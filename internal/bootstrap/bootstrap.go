@@ -11,10 +11,10 @@ import (
 
 	grpcapiserver "github.com/lynx-go/grpcapi/server"
 	"github.com/lynx-go/lynx"
+	"github.com/lynx-go/lynx-start-demo/internal/config"
 	"github.com/lynx-go/lynx-start/kernel"
 	"github.com/lynx-go/lynx-start/kernel/events"
 	"github.com/lynx-go/lynx-start/kernel/uow/buntx"
-	"github.com/lynx-go/lynx-start-demo/internal/config"
 
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
