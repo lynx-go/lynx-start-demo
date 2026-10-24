@@ -11,6 +11,7 @@ import (
 	"github.com/lynx-go/lynx/contrib/schedule"
 	"github.com/lynx-go/lynx/contrib/zap"
 
+	grpcapiauthn "github.com/lynx-go/grpcapi/authn"
 	grpcapiinterceptor "github.com/lynx-go/grpcapi/interceptor"
 	grpcapipolicy "github.com/lynx-go/grpcapi/policy"
 	grpcapiprotopolicy "github.com/lynx-go/grpcapi/policy/protopolicy"
@@ -59,6 +60,9 @@ func setup(app lynx.App) error {
 		return err
 	}
 
+	// 模块贡献的认证后增强器（access 的 roles/permissions claims 等）。
+	authnOpts := grpcapiauthn.Options{Enrichers: agg.Enrichers}
+
 	// 模块贡献的拦截器槽位（audit/ratelimit/usage 等）插入默认链。
 	var chain *grpcapiinterceptor.Chain
 	if len(agg.Stages) > 0 {
@@ -73,6 +77,7 @@ func setup(app lynx.App) error {
 		Services:             agg.Registrations,
 		ExtraRoutes:          agg.ExtraRoutes,
 		Authenticators:       agg.Authenticators,
+		AuthnOptions:         authnOpts,
 		Chain:                chain,
 		GRPCAddr:             cfg.Server.GRPCAddr,
 		HTTPAddr:             cfg.Server.HTTPAddr,

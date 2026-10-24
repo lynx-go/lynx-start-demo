@@ -8,6 +8,14 @@ data:
     max_open_conns: 8
 
 # lynx-start:config-fragment（lynx-start add 追加模块配置段的锚点，勿删）
+# --- module: access ---
+access:
+  roles:                      # 角色目录（可审计可改；精确匹配无通配符）
+    admin: ["access.assignment.write"]
+    editor: []
+  bootstrap_admins:           # 启动期自动授予 admin 的邮箱（未注册则告警跳过，注册后重启生效）
+    - "erin@example.com"
+
 # --- module: session ---
 session:
   secret: "dev-only-session-secret-change-me"  # 令牌主密钥（与 identity 独立），生产必须更换

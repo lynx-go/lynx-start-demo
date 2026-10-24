@@ -5,6 +5,7 @@ package modules
 import (
 	"github.com/lynx-go/lynx-start/kernel"
 
+	access "github.com/lynx-go/lynx-start-demo/internal/api/access"
 	demo "github.com/lynx-go/lynx-start-demo/internal/api/demo"
 	identity "github.com/lynx-go/lynx-start-demo/internal/api/identity"
 	session "github.com/lynx-go/lynx-start-demo/internal/api/session"
@@ -25,6 +26,10 @@ func Installed() []kernel.InstalledModule {
 		{
 			Module:   session.Module(),
 			Assemble: session.Assemble,
+		},
+		{
+			Module:   access.Module(),
+			Assemble: access.Assemble,
 		},
 		// lynx-start:module-entry（lynx-start add 注入锚点，勿删）
 	}

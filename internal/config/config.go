@@ -58,6 +58,14 @@ func BindConfig(f *pflag.FlagSet, c lynx.ConfigSource) error {
 	if err := lynx.DefaultBindConfigFunc(f, c); err != nil {
 		return err
 	}
+	// 骨架的配置文件在 configs/ 下；DefaultBindConfigFunc 只加 "."，必须
+	// 显式补上，否则 configs/config.yaml 静默不被发现（应用跑在默认值+
+	// 环境变量上——恰好与配置片段同值时会完全掩盖该缺陷）。
+	if cf, _ := f.GetString("config"); cf == "" {
+		if cd, _ := f.GetString("config-dir"); cd == "" {
+			c.AddSearchPath("configs")
+		}
+	}
 	c.SetEnvPrefix("LYNX_START_DEMO")
 	c.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
 	c.AutomaticEnv()
