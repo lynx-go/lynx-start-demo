@@ -136,6 +136,26 @@
         "proto/grpcapi/v1/policy.proto",
         "proto/notification/v1/notification.proto"
       ]
+    },
+    {
+      "name": "task",
+      "version": "0.1.0",
+      "files": [
+        "modules/task/domain/guard_test.go",
+        "modules/task/domain/task.go",
+        "modules/task/domain/task_test.go",
+        "modules/task/internal/api/module.go",
+        "modules/task/internal/api/policy_test.go",
+        "modules/task/internal/api/service.go",
+        "modules/task/internal/app/task.go",
+        "modules/task/internal/app/task_test.go",
+        "modules/task/internal/infra/migrations/00001_init.sql",
+        "modules/task/internal/infra/migrations/embed.go",
+        "modules/task/internal/infra/repo.go",
+        "modules/task/internal/infra/repo_test.go",
+        "proto/grpcapi/v1/policy.proto",
+        "proto/task/v1/task.proto"
+      ]
     }
   ]
 }

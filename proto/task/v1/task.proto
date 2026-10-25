@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+package task.v1;
+
+option go_package = "github.com/lynx-go/lynx-start-demo/genproto/task/v1;taskv1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "grpcapi/v1/policy.proto";
+
+// 公开 API 面 + 文件级默认公开曝光。全部方法要求认证；成员资格与
+// 创建者校验在 app 层（v1 不做组织级 RBAC——角色语义归 access）。
+// 资源路由挂组织层级（ADR-0008：organization_id 是租户语境的 REST 表达）。
+option (grpcapi.v1.api) = { api: "public", default_exposure: EXPOSURE_PUBLIC };
+
+// TaskService 是任务模块的 API 面：组织内任务（第一个组织挂靠业务资源，
+// ADR-0008 姿势首秀）。依赖 organization（DependsOn）：任务必属一个组织，
+// 读写前经其 domain 端口校验成员资格；完成与删除限创建者。
+service TaskService {
+  // 建任务（成员即可创建；创建者记为 actor）。要求认证。
+  rpc CreateTask(CreateTaskRequest) returns (Task) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { post: "/v1/organizations/{organization_id}/tasks" body: "*" };
+  }
+
+  // 取任务（成员可见）。要求认证。
+  rpc GetTask(GetTaskRequest) returns (Task) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { get: "/v1/organizations/{organization_id}/tasks/{task_id}" };
+  }
+
+  // 组织任务列表（成员可见，分页，created_at 降序）。要求认证。
+  rpc ListTasks(ListTasksRequest) returns (ListTasksResponse) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { get: "/v1/organizations/{organization_id}/tasks" };
+  }
+
+  // 标记完成（限创建者；幂等）。要求认证。
+  rpc CompleteTask(CompleteTaskRequest) returns (Task) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { post: "/v1/organizations/{organization_id}/tasks/{task_id}:complete" body: "*" };
+  }
+
+  // 删除任务（限创建者；幂等）。要求认证。
+  rpc DeleteTask(DeleteTaskRequest) returns (google.protobuf.Empty) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { delete: "/v1/organizations/{organization_id}/tasks/{task_id}" };
+  }
+}
+
+// Task 是一条组织内任务。creator 是创建者（完成与删除的裁决依据）。
+message Task {
+  string id = 1;
+  string organization_id = 2;
+  string creator_id = 3;
+  string title = 4;
+  string description = 5;
+  // 完成时间；未完成为空。
+  google.protobuf.Timestamp completed_at = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}
+
+message CreateTaskRequest {
+  // 组织 ID（路径绑定 /v1/organizations/{organization_id}/tasks）。
+  string organization_id = 1;
+  string title = 2;
+  string description = 3;
+}
+
+message GetTaskRequest {
+  string organization_id = 1;
+  string task_id = 2;
+}
+
+message ListTasksRequest {
+  string organization_id = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListTasksResponse {
+  repeated Task tasks = 1;
+  string next_page_token = 2;
+  int32 total_size = 3;
+}
+
+message CompleteTaskRequest {
+  string organization_id = 1;
+  string task_id = 2;
+}
+
+message DeleteTaskRequest {
+  string organization_id = 1;
+  string task_id = 2;
+}

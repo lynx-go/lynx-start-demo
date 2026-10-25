@@ -9,6 +9,7 @@ import (
 	notification "github.com/lynx-go/lynx-start-demo/modules/notification"
 	organization "github.com/lynx-go/lynx-start-demo/modules/organization"
 	session "github.com/lynx-go/lynx-start-demo/modules/session"
+	task "github.com/lynx-go/lynx-start-demo/modules/task"
 	"github.com/lynx-go/lynx-start/kernel"
 	// lynx-start:module-import（lynx-start add 注入锚点，勿删）
 )
@@ -39,6 +40,10 @@ func Installed() []kernel.InstalledModule {
 		{
 			Module:   notification.Module(),
 			Assemble: notification.Assemble,
+		},
+		{
+			Module:   task.Module(),
+			Assemble: task.Assemble,
 		},
 		// lynx-start:module-entry（lynx-start add 注入锚点，勿删）
 	}

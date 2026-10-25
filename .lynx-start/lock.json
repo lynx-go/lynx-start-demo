@@ -138,6 +138,27 @@
         "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3",
         "proto/session/v1/session.proto": "7a676234ea0476b05bbab0019f63f73b0d54ef14dfdb6cefa8633904b6fa8c54"
       }
+    },
+    "task": {
+      "version": "0.1.0",
+      "source": "worktree",
+      "commit": "718dac7522d6088f0474e2b834b48ac9c40ba0a2",
+      "files": {
+        "modules/task/domain/guard_test.go": "97e9292f5f687d9710177b25051556872bc8ec80723c65bbf4a7688389cfa5cb",
+        "modules/task/domain/task.go": "0ebee78d2db13d94a65a42642de1f8ebacb2a48707630c764f09a28f90f85a46",
+        "modules/task/domain/task_test.go": "007a9e840699297a62238732100412b56cd438182ab3bfd50c04080f3432bb94",
+        "modules/task/internal/api/module.go": "38fedf8290fec908d7ccf6ef5fcde7a955f7d91d726839a2d1e7505a9fa7f0cd",
+        "modules/task/internal/api/policy_test.go": "b18d7d7bbfa7d7ffbf6df36f1b4faaf5ee84c4b4455e3c9a090170ed62db4876",
+        "modules/task/internal/api/service.go": "62c4738dddaad70109a113e925303ab37162ebd9e4c91bcd6925886f0c06c8b7",
+        "modules/task/internal/app/task.go": "2cf91ba1359a172cca930804f47c04b57466f75ee9dfd6e5d9ffe4f7b65d3661",
+        "modules/task/internal/app/task_test.go": "b5147eef1a1d3355b45083475cb0e01714b8026f00024f3637d648ef13f8a207",
+        "modules/task/internal/infra/migrations/00001_init.sql": "8c0a58cecc40ff9104965e3f7d4fec0624fd45d7ecb1aaf47ffe2858c32d1ab9",
+        "modules/task/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
+        "modules/task/internal/infra/repo.go": "6ad3a49a5380764c8118649204cf6aee1157ac84f9efefc1dc022f804917b130",
+        "modules/task/internal/infra/repo_test.go": "b7896fc4437e6f3ad4e6e07998cee188f4d81fbea878a812a54b1b42f19475b3",
+        "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3",
+        "proto/task/v1/task.proto": "d783e653597809ae2c789f02d554d050da6bddef869f750e195f7e406c5c6dd4"
+      }
     }
   }
 }
