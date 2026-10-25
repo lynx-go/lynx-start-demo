@@ -80,7 +80,7 @@ func (u *UseCase) CreateSession(ctx context.Context, userID, email string) (*Tok
 		if err := u.repo.Create(ctx, s); err != nil {
 			return err
 		}
-		return u.publish(ctx, "session.session.created", map[string]string{"id": s.ID, "user_id": s.UserID})
+		return u.publish(ctx, session.EventSessionCreated, map[string]string{"id": s.ID, "user_id": s.UserID})
 	})
 	if err != nil {
 		return nil, err
@@ -148,7 +148,7 @@ func (u *UseCase) Refresh(ctx context.Context, refreshToken string) (*TokenPair,
 		if err := u.repo.Rotate(ctx, s); err != nil {
 			return err
 		}
-		return u.publish(ctx, "session.session.refreshed", map[string]string{"id": s.ID, "user_id": s.UserID})
+		return u.publish(ctx, session.EventSessionRefreshed, map[string]string{"id": s.ID, "user_id": s.UserID})
 	})
 	if err != nil {
 		return nil, err
@@ -184,7 +184,7 @@ func (u *UseCase) LogoutAll(ctx context.Context, userID string) (int, error) {
 		if err != nil {
 			return err
 		}
-		return u.publish(ctx, "session.session.revoked", map[string]string{"user_id": userID, "reason": session.RevokeLogoutAll})
+		return u.publish(ctx, session.EventSessionRevoked, map[string]string{"user_id": userID, "reason": session.RevokeLogoutAll})
 	})
 	return n, err
 }
@@ -213,7 +213,7 @@ func (u *UseCase) OnPasswordChanged(ctx context.Context, userID string) error {
 		if err != nil {
 			return err
 		}
-		return u.publish(ctx, "session.session.revoked", map[string]string{"user_id": userID, "reason": session.RevokePassword})
+		return u.publish(ctx, session.EventSessionRevoked, map[string]string{"user_id": userID, "reason": session.RevokePassword})
 	})
 }
 
@@ -222,7 +222,7 @@ func (u *UseCase) revoke(ctx context.Context, s *session.Session, reason string)
 		if err := u.repo.Revoke(ctx, s.ID, reason, u.now.Now()); err != nil {
 			return err
 		}
-		return u.publish(ctx, "session.session.revoked", map[string]string{"id": s.ID, "user_id": s.UserID, "reason": reason})
+		return u.publish(ctx, session.EventSessionRevoked, map[string]string{"id": s.ID, "user_id": s.UserID, "reason": reason})
 	})
 }
 

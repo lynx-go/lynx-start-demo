@@ -3,6 +3,7 @@ package demo
 
 import (
 	"context"
+	"encoding/json"
 	"time"
 
 	"github.com/lynx-go/lynx-start-demo/domain/demo"
@@ -37,7 +38,7 @@ func (u *UseCase) Create(ctx context.Context, title string) (*demo.Item, error) 
 			return err
 		}
 		out = item
-		return u.events.Publish(ctx, envelope("demo.item.created", item))
+		return u.publish(ctx, demo.EventItemCreated, map[string]string{"id": item.ID, "title": item.Title})
 	})
 	if err != nil {
 		return nil, err
@@ -65,7 +66,7 @@ func (u *UseCase) Rename(ctx context.Context, id, title string) (*demo.Item, err
 			return err
 		}
 		out = item
-		return u.events.Publish(ctx, envelope("demo.item.renamed", item))
+		return u.publish(ctx, demo.EventItemRenamed, map[string]string{"id": item.ID, "title": item.Title})
 	})
 	if err != nil {
 		return nil, err
@@ -79,11 +80,7 @@ func (u *UseCase) Delete(ctx context.Context, id string) error {
 		if err := u.repo.Delete(ctx, id); err != nil {
 			return err
 		}
-		return u.events.Publish(ctx, events.Envelope{
-			Name:    "demo.item.deleted",
-			Module:  "demo",
-			Payload: []byte(`{"id":"` + id + `"}`),
-		})
+		return u.publish(ctx, demo.EventItemDeleted, map[string]string{"id": id})
 	})
 }
 
@@ -111,13 +108,18 @@ func (u *UseCase) List(ctx context.Context, pageSize int32, pageToken string) (*
 	return &ListResult{Items: items, NextToken: page.NextToken, TotalSize: int32(total)}, nil
 }
 
-// envelope 构造事件信封（载荷最小事实集，消费方按目录文档解码）。
-func envelope(name string, item *demo.Item) events.Envelope {
-	return events.Envelope{
-		Name:    name,
-		Module:  "demo",
-		Payload: []byte(`{"id":"` + item.ID + `","title":` + quote(item.Title) + `}`),
+// publish 构造事件信封并发布（载荷 JSON 编码——手搓字符串会在 title 含
+// 引号/反斜杠时产生非法 JSON；与 identity/session 的 publish 同款纪律）。
+func (u *UseCase) publish(ctx context.Context, name string, payload map[string]string) error {
+	raw, err := json.Marshal(payload)
+	if err != nil {
+		return err
 	}
+	return u.events.Publish(ctx, events.Envelope{
+		ID:         idgen.New(),
+		Name:       name,
+		Module:     "demo",
+		OccurredAt: u.now().UTC(),
+		Payload:    raw,
+	})
 }
-
-func quote(s string) string { return `"` + s + `"` }

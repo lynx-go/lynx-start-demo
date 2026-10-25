@@ -3,6 +3,7 @@ package access
 import (
 	"context"
 
+	"github.com/lynx-go/lynx-start-demo/domain/access"
 	accessv1 "github.com/lynx-go/lynx-start-demo/genproto/access/v1"
 	appaccess "github.com/lynx-go/lynx-start-demo/internal/app/access"
 	infraaccess "github.com/lynx-go/lynx-start-demo/internal/infra/access"
@@ -26,6 +27,10 @@ func Module() kernel.Module {
 		DependsOn:   []string{"identity"},
 		Policies:    []protoreflect.FileDescriptor{accessv1.File_access_v1_access_proto},
 		Migrations:  migrations.FS,
+		PublishedEvents: []string{
+			access.EventAssignmentGranted,
+			access.EventAssignmentRevoked,
+		},
 		Config: kernel.ConfigSpec{
 			Defaults: map[string]any{
 				"roles":            map[string]any{"admin": []any{"access.assignment.write"}},

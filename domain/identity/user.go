@@ -26,6 +26,13 @@ var (
 	ErrTokenExpired       = space.New("TOKEN_EXPIRED", "access token is expired")
 )
 
+// 事件目录（契约②）：app 层发布与 Module().PublishedEvents 共用同一常量
+// （杜绝声明与实发漂移），item.json 的 publishedEvents 与此同步。
+const (
+	EventUserCreated         = "identity.user.created"
+	EventUserPasswordChanged = "identity.user.password-changed"
+)
+
 // 账号状态（v0.1 只有 active 参与流转；disabled 为停用保留位）。
 const (
 	StatusActive   = "active"

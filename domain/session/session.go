@@ -42,6 +42,18 @@ const (
 	RevokeRefreshReuse = "refresh-reuse"
 )
 
+// 本模块发布的事件目录（契约②）：app 层发布与 Module().PublishedEvents
+// 共用同一常量，item.json 的 publishedEvents 与此同步。
+const (
+	EventSessionCreated   = "session.session.created"
+	EventSessionRefreshed = "session.session.refreshed"
+	EventSessionRevoked   = "session.session.revoked"
+)
+
+// 消费的跨模块事件目录（契约②：字符串引用 identity 的目录，不 import
+// 其代码；Module().ConsumedEvents 声明后由 kernel 启动期校验确有发布者）。
+const IdentityUserPasswordChanged = "identity.user.password-changed"
+
 // Session 是一次可吊销的登录会话。访问令牌短时效无状态（不查库），
 // 会话状态是吊销的裁决点：Refresh 与认证器回读本聚合。
 type Session struct {

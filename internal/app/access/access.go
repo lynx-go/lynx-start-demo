@@ -60,7 +60,7 @@ func (u *UseCase) Grant(ctx context.Context, userID, role string) error {
 		if !created {
 			return nil // 幂等 no-op：不重复发布事件
 		}
-		return u.publish(ctx, "access.assignment.granted", map[string]string{"user_id": userID, "role": role})
+		return u.publish(ctx, access.EventAssignmentGranted, map[string]string{"user_id": userID, "role": role})
 	})
 }
 
@@ -77,7 +77,7 @@ func (u *UseCase) Revoke(ctx context.Context, userID, role string) error {
 		if !removed {
 			return nil
 		}
-		return u.publish(ctx, "access.assignment.revoked", map[string]string{"user_id": userID, "role": role})
+		return u.publish(ctx, access.EventAssignmentRevoked, map[string]string{"user_id": userID, "role": role})
 	})
 }
 

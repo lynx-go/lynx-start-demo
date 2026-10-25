@@ -26,6 +26,13 @@ var (
 	ErrUnknownUser = space.New("UNKNOWN_USER", "user does not exist")
 )
 
+// 事件目录（契约②）：app 层发布与 Module().PublishedEvents 共用同一常量
+// （杜绝声明与实发漂移），item.json 的 publishedEvents 与此同步。
+const (
+	EventAssignmentGranted = "access.assignment.granted"
+	EventAssignmentRevoked = "access.assignment.revoked"
+)
+
 // nameRe 角色名与权限名约束：小写字母开头，可含数字/点/中划线/下划线
 // （如 "admin"、"access.assignment.write"）。
 var nameRe = regexp.MustCompile(`^[a-z][a-z0-9._-]*$`)

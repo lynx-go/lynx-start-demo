@@ -17,6 +17,14 @@ var (
 	ErrEmptyTitle   = space.New("EMPTY_TITLE", "title must not be empty")
 )
 
+// 事件目录（契约②）：app 层发布与 Module().PublishedEvents 共用同一常量
+// （杜绝声明与实发漂移），item.json 的 publishedEvents 与此同步。
+const (
+	EventItemCreated = "demo.item.created"
+	EventItemRenamed = "demo.item.renamed"
+	EventItemDeleted = "demo.item.deleted"
+)
+
 // Item 是样例聚合（单实体；不变量：title 非空）。
 type Item struct {
 	ID        string

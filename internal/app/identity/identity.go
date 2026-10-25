@@ -20,10 +20,6 @@ import (
 // purpose 域隔离）：其他用途派生的令牌在本模块不可通过验证。
 const PurposeAccessToken = "identity-access-token"
 
-// dummyHash 是登录时序对齐用的固定 Argon2id 散列：邮箱不存在时也跑一次
-// 等价的 Argon2id 验证，避免响应时间泄露「该邮箱是否已注册」。
-const dummyHash = "$argon2id$v=19$m=65536,t=3,p=4$6wHLtoDAMkipwtz37Tir5g$5pFVTZpWG1E5wGSfeM5Lq07jjryBBSTKekUZ9w0ihgc"
-
 // UseCase 是身份模块的用例集。
 type UseCase struct {
 	repo     identity.Repository
@@ -65,7 +61,7 @@ func (u *UseCase) Register(ctx context.Context, email, plainPassword, displayNam
 			return err
 		}
 		user = nu
-		return u.publish(ctx, "identity.user.created", map[string]string{"id": nu.ID, "email": nu.Email})
+		return u.publish(ctx, identity.EventUserCreated, map[string]string{"id": nu.ID, "email": nu.Email})
 	})
 	if err != nil {
 		return nil, nil, err
@@ -82,7 +78,11 @@ func (u *UseCase) Login(ctx context.Context, email, plainPassword string) (*iden
 	user, err := u.repo.GetByEmail(ctx, identity.NormalizeEmail(email))
 	if err != nil {
 		if errors.Is(err, identity.ErrUserNotFound) {
-			_, _ = password.Verify(plainPassword, dummyHash)
+			// 时序对齐：邮箱不存在也跑一次等价 Argon2id（哑靶来自 kernel，
+			// 与其参数恒同参——参数升级经 kernel 修复直达，不会失配）。
+			if dummy, derr := password.DummyHash(); derr == nil {
+				_, _ = password.Verify(plainPassword, dummy)
+			}
 			return nil, nil, identity.ErrInvalidCredentials
 		}
 		return nil, nil, err
@@ -177,7 +177,7 @@ func (u *UseCase) ChangePassword(ctx context.Context, userID, oldPassword, newPa
 		if err := u.repo.UpdatePassword(ctx, user); err != nil {
 			return err
 		}
-		return u.publish(ctx, "identity.user.password-changed", map[string]string{"id": user.ID})
+		return u.publish(ctx, identity.EventUserPasswordChanged, map[string]string{"id": user.ID})
 	})
 }
 

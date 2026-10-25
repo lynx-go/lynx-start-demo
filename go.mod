@@ -2,14 +2,12 @@ module github.com/lynx-go/lynx-start-demo
 
 go 1.26.8
 
-replace github.com/lynx-go/lynx-start/kernel => /home/qiulin/workspace/qiulin/lynx-start/kernel
-
 require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.32.0
 	github.com/lynx-go/grpcapi v0.3.0
 	github.com/lynx-go/grpcapi/genproto v0.3.0
 	github.com/lynx-go/lynx v1.20.0
-	github.com/lynx-go/lynx-start/kernel v0.0.0-00010101000000-000000000000
+	github.com/lynx-go/lynx-start/kernel v0.2.0
 	github.com/lynx-go/lynx/contrib/schedule v1.20.0
 	github.com/lynx-go/lynx/contrib/zap v1.20.0
 	github.com/spf13/pflag v1.0.10

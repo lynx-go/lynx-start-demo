@@ -3,6 +3,7 @@ package identity
 import (
 	"context"
 
+	"github.com/lynx-go/lynx-start-demo/domain/identity"
 	identityv1 "github.com/lynx-go/lynx-start-demo/genproto/identity/v1"
 	appidentity "github.com/lynx-go/lynx-start-demo/internal/app/identity"
 	infraindentity "github.com/lynx-go/lynx-start-demo/internal/infra/identity"
@@ -26,6 +27,10 @@ func Module() kernel.Module {
 		Description: "身份模块：注册/登录（Argon2id + HS256 JWT）/自助改密，贡献 Bearer 认证器",
 		Policies:    []protoreflect.FileDescriptor{identityv1.File_identity_v1_identity_proto},
 		Migrations:  migrations.FS,
+		PublishedEvents: []string{
+			identity.EventUserCreated,
+			identity.EventUserPasswordChanged,
+		},
 		Config: kernel.ConfigSpec{
 			Defaults: map[string]any{
 				"secret":    appidentity.DefaultDevSecret,
