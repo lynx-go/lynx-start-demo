@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 
+	accessv1 "github.com/lynx-go/lynx-start-demo/genproto/access/v1"
 	"github.com/lynx-go/lynx-start-demo/modules/access/domain"
-	accessv1 "github.com/lynx-go/lynx-start-demo/modules/access/genproto/access/v1"
 	appaccess "github.com/lynx-go/lynx-start-demo/modules/access/internal/app"
 
 	"github.com/lynx-go/grpcapi/principal"

@@ -3,8 +3,8 @@ package access
 import (
 	"context"
 
+	accessv1 "github.com/lynx-go/lynx-start-demo/genproto/access/v1"
 	"github.com/lynx-go/lynx-start-demo/modules/access/domain"
-	accessv1 "github.com/lynx-go/lynx-start-demo/modules/access/genproto/access/v1"
 	appaccess "github.com/lynx-go/lynx-start-demo/modules/access/internal/app"
 	infraaccess "github.com/lynx-go/lynx-start-demo/modules/access/internal/infra"
 	"github.com/lynx-go/lynx-start-demo/modules/access/internal/infra/migrations"

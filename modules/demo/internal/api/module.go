@@ -3,8 +3,8 @@ package demo
 import (
 	"context"
 
+	demov1 "github.com/lynx-go/lynx-start-demo/genproto/demo/v1"
 	"github.com/lynx-go/lynx-start-demo/modules/demo/domain"
-	demov1 "github.com/lynx-go/lynx-start-demo/modules/demo/genproto/demo/v1"
 	appdemo "github.com/lynx-go/lynx-start-demo/modules/demo/internal/app"
 	infrademo "github.com/lynx-go/lynx-start-demo/modules/demo/internal/infra"
 	"github.com/lynx-go/lynx-start-demo/modules/demo/internal/infra/migrations"

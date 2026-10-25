@@ -5,7 +5,7 @@ import (
 	"context"
 	"errors"
 
-	demov1 "github.com/lynx-go/lynx-start-demo/modules/demo/genproto/demo/v1"
+	demov1 "github.com/lynx-go/lynx-start-demo/genproto/demo/v1"
 	appdemo "github.com/lynx-go/lynx-start-demo/modules/demo/internal/app"
 
 	"google.golang.org/grpc/codes"

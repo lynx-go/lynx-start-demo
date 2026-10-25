@@ -6,8 +6,8 @@ import (
 	"context"
 	"errors"
 
+	sessionv1 "github.com/lynx-go/lynx-start-demo/genproto/session/v1"
 	"github.com/lynx-go/lynx-start-demo/modules/session/domain"
-	sessionv1 "github.com/lynx-go/lynx-start-demo/modules/session/genproto/session/v1"
 	appsession "github.com/lynx-go/lynx-start-demo/modules/session/internal/app"
 
 	"github.com/lynx-go/grpcapi/principal"
