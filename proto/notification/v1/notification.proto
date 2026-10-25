@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+package notification.v1;
+
+option go_package = "github.com/lynx-go/lynx-start-demo/genproto/notification/v1;notificationv1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "grpcapi/v1/policy.proto";
+
+// 公开 API 面 + 文件级默认公开曝光。全部方法要求认证；通知只可见于
+// 收件人本人（user_id 从 Principal 取，无需 permission）。
+option (grpcapi.v1.api) = { api: "public", default_exposure: EXPOSURE_PUBLIC };
+
+// NotificationService 是通知模块的 API 面：站内通知的自助查询与已读
+// 标记。写入仅经事件订阅（identity/organization 的目录），无发送 RPC
+// （跨模块调用面另立决策）。依赖 identity + organization（DependsOn：
+// 消费其事件，启动期交叉校验发布者在装）。
+service NotificationService {
+  // 当前认证用户的通知（自助，分页；unread_only 过滤未读）。要求认证。
+  rpc ListNotifications(ListNotificationsRequest) returns (ListNotificationsResponse) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { get: "/v1/notifications" };
+  }
+
+  // 标记单条已读（仅本人的通知；幂等）。要求认证。
+  rpc MarkNotificationRead(MarkNotificationReadRequest) returns (google.protobuf.Empty) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { post: "/v1/notifications/{notification_id}:mark-read" body: "*" };
+  }
+
+  // 标记全部未读为已读，返回标记条数。要求认证。
+  rpc MarkAllNotificationsRead(MarkAllNotificationsReadRequest) returns (MarkAllNotificationsReadResponse) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { post: "/v1/notifications:mark-all-read" body: "*" };
+  }
+}
+
+// Notification 是一条站内通知：内容是发生时刻的渲染快照（title/body
+// 定格写入，不引用模板），payload 保留原始事件载荷供前端跳转。
+message Notification {
+  string id = 1;
+  // 通知类型 = 触发事件名（如 identity.user.password-changed）。
+  string type = 2;
+  string title = 3;
+  string body = 4;
+  // 原始事件载荷（键值对，如 organization_id）。
+  map<string, string> payload = 5;
+  // 已读时间；未读为空。
+  google.protobuf.Timestamp read_at = 6;
+  google.protobuf.Timestamp created_at = 7;
+}
+
+message ListNotificationsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  // 仅未读（角标场景）。
+  bool unread_only = 3;
+}
+
+message ListNotificationsResponse {
+  repeated Notification notifications = 1;
+  string next_page_token = 2;
+  int32 total_size = 3;
+  // 未读总数（当前 filter 无关的整户未读计数，前端角标一次到位）。
+  int32 unread_size = 4;
+}
+
+message MarkNotificationReadRequest {
+  // 通知 ID（路径绑定 /v1/notifications/{notification_id}:mark-read）。
+  string notification_id = 1;
+}
+
+message MarkAllNotificationsReadRequest {}
+
+message MarkAllNotificationsReadResponse {
+  // 本次标记为已读的条数。
+  int64 updated = 1;
+}

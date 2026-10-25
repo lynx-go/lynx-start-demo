@@ -92,6 +92,50 @@
         "proto/access/v1/access.proto",
         "proto/grpcapi/v1/policy.proto"
       ]
+    },
+    {
+      "name": "organization",
+      "version": "0.1.1",
+      "files": [
+        "modules/organization/domain/guard_test.go",
+        "modules/organization/domain/organization.go",
+        "modules/organization/domain/organization_test.go",
+        "modules/organization/domain/repo.go",
+        "modules/organization/internal/api/module.go",
+        "modules/organization/internal/api/policy_test.go",
+        "modules/organization/internal/api/service.go",
+        "modules/organization/internal/app/organization.go",
+        "modules/organization/internal/app/organization_test.go",
+        "modules/organization/internal/infra/migrations/00001_init.sql",
+        "modules/organization/internal/infra/migrations/embed.go",
+        "modules/organization/internal/infra/repo.go",
+        "modules/organization/internal/infra/repo_test.go",
+        "proto/grpcapi/v1/policy.proto",
+        "proto/organization/v1/organization.proto"
+      ]
+    },
+    {
+      "name": "notification",
+      "version": "0.1.0",
+      "files": [
+        "modules/notification/domain/guard_test.go",
+        "modules/notification/domain/notification.go",
+        "modules/notification/domain/notification_test.go",
+        "modules/notification/domain/repo.go",
+        "modules/notification/internal/api/module.go",
+        "modules/notification/internal/api/policy_test.go",
+        "modules/notification/internal/api/service.go",
+        "modules/notification/internal/app/notification.go",
+        "modules/notification/internal/app/notification_test.go",
+        "modules/notification/internal/infra/migrations/00001_init.sql",
+        "modules/notification/internal/infra/migrations/embed.go",
+        "modules/notification/internal/infra/repo.go",
+        "modules/notification/internal/infra/repo_test.go",
+        "modules/notification/internal/infra/watcher.go",
+        "modules/notification/internal/infra/watcher_test.go",
+        "proto/grpcapi/v1/policy.proto",
+        "proto/notification/v1/notification.proto"
+      ]
     }
   ]
 }

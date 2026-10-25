@@ -8,6 +8,10 @@ data:
     max_open_conns: 8
 
 # lynx-start:config-fragment（lynx-start add 追加模块配置段的锚点，勿删）
+# --- module: notification ---
+
+# --- module: organization ---
+
 # --- module: access ---
 access:
   roles:                      # 角色目录（可审计可改；精确匹配无通配符）

@@ -1,0 +1,137 @@
+syntax = "proto3";
+
+package organization.v1;
+
+option go_package = "github.com/lynx-go/lynx-start-demo/genproto/organization/v1;organizationv1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "grpcapi/v1/policy.proto";
+
+// 公开 API 面 + 文件级默认公开曝光。全部方法要求认证；成员资格与
+// owner 校验在 app 层（v1 不做组织级 RBAC——角色/权限语义归 access
+// 模块，proto 注解保持 authenticated）。
+option (grpcapi.v1.api) = { api: "public", default_exposure: EXPOSURE_PUBLIC };
+
+// OrganizationService 是组织模块的 API 面：组织与成员事实（结构 + 成员，
+// 非 RBAC）。依赖 identity 模块（DependsOn）：成员是 identity 用户
+// （只存 ID），添加成员时校验用户存在。
+service OrganizationService {
+  // 创建组织，创建者即 owner。要求认证。
+  rpc CreateOrganization(CreateOrganizationRequest) returns (Organization) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { post: "/v1/organizations" body: "*" };
+  }
+
+  // 取组织（仅成员可见）。要求认证。
+  rpc GetOrganization(GetOrganizationRequest) returns (Organization) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { get: "/v1/organizations/{organization_id}" };
+  }
+
+  // 当前认证用户加入的组织（自助，分页）。要求认证。
+  rpc ListMyOrganizations(ListMyOrganizationsRequest) returns (ListMyOrganizationsResponse) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { get: "/v1/my/organizations" };
+  }
+
+  // 改名（owner-only；slug 创建后不可变）。要求认证。
+  rpc RenameOrganization(RenameOrganizationRequest) returns (Organization) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { patch: "/v1/organizations/{organization_id}" body: "*" };
+  }
+
+  // 加成员（owner-only；幂等）。要求认证。
+  rpc AddMember(AddMemberRequest) returns (google.protobuf.Empty) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { post: "/v1/organizations/{organization_id}/members" body: "*" };
+  }
+
+  // 移除成员（owner-only；不可移除 owner；幂等）。要求认证。
+  rpc RemoveMember(RemoveMemberRequest) returns (google.protobuf.Empty) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { delete: "/v1/organizations/{organization_id}/members/{user_id}" };
+  }
+
+  // 列成员（成员可见，分页）。要求认证。
+  rpc ListMembers(ListMembersRequest) returns (ListMembersResponse) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { get: "/v1/organizations/{organization_id}/members" };
+  }
+
+  // 成员自行离开（最后一个 owner 不可离开）。要求认证。
+  rpc Leave(LeaveRequest) returns (google.protobuf.Empty) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { post: "/v1/organizations/{organization_id}:leave" body: "*" };
+  }
+}
+
+message Organization {
+  string id = 1;
+  string name = 2;
+  string slug = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message OrganizationMember {
+  string user_id = 1;
+  bool is_owner = 2;
+  google.protobuf.Timestamp joined_at = 3;
+}
+
+message CreateOrganizationRequest {
+  string name = 1;
+  string slug = 2;
+}
+
+message GetOrganizationRequest {
+  string organization_id = 1;
+}
+
+message ListMyOrganizationsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+}
+
+message ListMyOrganizationsResponse {
+  repeated Organization organizations = 1;
+  string next_page_token = 2;
+  int32 total_size = 3;
+}
+
+message RenameOrganizationRequest {
+  string organization_id = 1;
+  string name = 2;
+}
+
+message AddMemberRequest {
+  // 组织 ID（路径绑定 /v1/organizations/{organization_id}/members）。
+  string organization_id = 1;
+  string user_id = 2;
+}
+
+message RemoveMemberRequest {
+  // 组织 ID（路径绑定 /v1/organizations/{organization_id}/members/{user_id}）。
+  string organization_id = 1;
+  string user_id = 2;
+}
+
+message ListMembersRequest {
+  // 组织 ID（路径绑定 /v1/organizations/{organization_id}/members）。
+  string organization_id = 1;
+  int32 page_size = 2;
+  string page_token = 3;
+}
+
+message ListMembersResponse {
+  repeated OrganizationMember members = 1;
+  string next_page_token = 2;
+  int32 total_size = 3;
+}
+
+message LeaveRequest {
+  // 组织 ID（路径绑定 /v1/organizations/{organization_id}:leave）。
+  string organization_id = 1;
+}

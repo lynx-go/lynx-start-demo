@@ -1,0 +1,64 @@
+package organization
+
+import (
+	"context"
+
+	organizationv1 "github.com/lynx-go/lynx-start-demo/genproto/organization/v1"
+	"github.com/lynx-go/lynx-start-demo/modules/organization/domain"
+	apporganization "github.com/lynx-go/lynx-start-demo/modules/organization/internal/app"
+	infraorganization "github.com/lynx-go/lynx-start-demo/modules/organization/internal/infra"
+	"github.com/lynx-go/lynx-start-demo/modules/organization/internal/infra/migrations"
+
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/lynx-go/grpcapi/server"
+	"github.com/lynx-go/lynx-start/kernel"
+	"google.golang.org/grpc"
+	"google.golang.org/protobuf/reflect/protoreflect"
+)
+
+// Module 返回静态装配描述。DependsOn: identity——成员是 identity 用户
+// （只存 ID），添加成员时经 identity domain 只读端口校验用户存在
+// （安装器校验依赖已装）。v0.1 无配置段。
+func Module() kernel.Module {
+	return kernel.Module{
+		Name:        "organization",
+		Description: "组织模块：组织与成员事实（创建者即 owner，owner-only 管理），依赖 identity",
+		DependsOn:   []string{"identity"},
+		Policies:    []protoreflect.FileDescriptor{organizationv1.File_organization_v1_organization_proto},
+		Migrations:  migrations.FS,
+		PublishedEvents: []string{
+			organization.EventOrganizationCreated,
+			organization.EventMemberAdded,
+			organization.EventMemberRemoved,
+		},
+	}
+}
+
+// Assemble 构造动态装配产物：仓储（本模块 + identity domain 只读适配器）
+// → 用例 → 处理器 → 注册。源码归应用所有：按需修改。
+func Assemble(deps kernel.Deps) (kernel.Assembly, error) {
+	uc := apporganization.New(
+		infraorganization.NewRepository(deps.DB),
+		infraorganization.NewUserReader(deps.DB), // DependsOn: identity domain 只读消费
+		deps.Tx, deps.Events,
+	)
+	return kernel.Assembly{
+		Registrations: []server.Registration{newRegistration(NewService(uc))},
+	}, nil
+}
+
+// newRegistration 手写注册（Name/Descriptor/RegisterGRPC/RegisterHTTP），
+// 等价于 protoc-gen-grpcapi 生成物，少一个生成依赖。
+func newRegistration(svc *Service) server.Registration {
+	return server.Registration{
+		API:        "public",
+		Name:       "OrganizationService",
+		Descriptor: organizationv1.File_organization_v1_organization_proto.Services().ByName("OrganizationService"),
+		RegisterGRPC: func(s *grpc.Server) {
+			organizationv1.RegisterOrganizationServiceServer(s, svc)
+		},
+		RegisterHTTP: func(ctx context.Context, mux *runtime.ServeMux, conn grpc.ClientConnInterface) error {
+			return organizationv1.RegisterOrganizationServiceHandlerClient(ctx, mux, organizationv1.NewOrganizationServiceClient(conn))
+		},
+	}
+}

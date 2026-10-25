@@ -6,6 +6,8 @@ import (
 	access "github.com/lynx-go/lynx-start-demo/modules/access"
 	demo "github.com/lynx-go/lynx-start-demo/modules/demo"
 	identity "github.com/lynx-go/lynx-start-demo/modules/identity"
+	notification "github.com/lynx-go/lynx-start-demo/modules/notification"
+	organization "github.com/lynx-go/lynx-start-demo/modules/organization"
 	session "github.com/lynx-go/lynx-start-demo/modules/session"
 	"github.com/lynx-go/lynx-start/kernel"
 	// lynx-start:module-import（lynx-start add 注入锚点，勿删）
@@ -29,6 +31,14 @@ func Installed() []kernel.InstalledModule {
 		{
 			Module:   access.Module(),
 			Assemble: access.Assemble,
+		},
+		{
+			Module:   organization.Module(),
+			Assemble: organization.Assemble,
+		},
+		{
+			Module:   notification.Module(),
+			Assemble: notification.Assemble,
 		},
 		// lynx-start:module-entry（lynx-start add 注入锚点，勿删）
 	}
