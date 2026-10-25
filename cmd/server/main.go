@@ -20,7 +20,7 @@ import (
 
 	"github.com/lynx-go/lynx-start-demo/internal/bootstrap"
 	"github.com/lynx-go/lynx-start-demo/internal/config"
-	"github.com/lynx-go/lynx-start-demo/internal/modules"
+	"github.com/lynx-go/lynx-start-demo/modules"
 )
 
 func main() {
