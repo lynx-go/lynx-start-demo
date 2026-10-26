@@ -2,6 +2,9 @@ version: v2
 
 deps:
   - buf.build/googleapis/googleapis
+  # grpcapi 声明语法（policy.proto）经 BSR 供给：应用只 import 不持有，
+  # 生成 inputs 仅 directory: proto，dep 文件不产码（Go 类型由 grpcapi Go 模块提供）。
+  - buf.build/lynx-go/grpcapi
 modules:
   - path: proto
 lint:
@@ -16,7 +19,3 @@ lint:
 breaking:
   use:
     - FILE
-  # vendored grpcapi policy.proto：声明语法归库持有，不做上游 breaking 比较，
-  # 生成侧经 buf.gen.yaml 排除（Go 类型由 grpcapi/genproto 提供）。
-  ignore:
-    - proto/grpcapi/v1/policy.proto

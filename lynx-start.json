@@ -17,8 +17,7 @@
         "modules/demo/internal/infra/migrations/00001_init.sql",
         "modules/demo/internal/infra/migrations/embed.go",
         "modules/demo/internal/infra/repo.go",
-        "proto/demo/v1/demo.proto",
-        "proto/grpcapi/v1/policy.proto"
+        "proto/demo/v1/demo.proto"
       ]
     },
     {
@@ -41,7 +40,6 @@
         "modules/identity/internal/infra/migrations/embed.go",
         "modules/identity/internal/infra/repo.go",
         "modules/identity/internal/infra/repo_test.go",
-        "proto/grpcapi/v1/policy.proto",
         "proto/identity/v1/identity.proto"
       ]
     },
@@ -67,7 +65,6 @@
         "modules/session/internal/infra/userreader.go",
         "modules/session/internal/infra/watcher.go",
         "modules/session/internal/infra/watcher_test.go",
-        "proto/grpcapi/v1/policy.proto",
         "proto/session/v1/session.proto"
       ]
     },
@@ -89,8 +86,7 @@
         "modules/access/internal/infra/migrations/embed.go",
         "modules/access/internal/infra/repo.go",
         "modules/access/internal/infra/repo_test.go",
-        "proto/access/v1/access.proto",
-        "proto/grpcapi/v1/policy.proto"
+        "proto/access/v1/access.proto"
       ]
     },
     {
@@ -110,7 +106,6 @@
         "modules/organization/internal/infra/migrations/embed.go",
         "modules/organization/internal/infra/repo.go",
         "modules/organization/internal/infra/repo_test.go",
-        "proto/grpcapi/v1/policy.proto",
         "proto/organization/v1/organization.proto"
       ]
     },
@@ -133,7 +128,6 @@
         "modules/notification/internal/infra/repo_test.go",
         "modules/notification/internal/infra/watcher.go",
         "modules/notification/internal/infra/watcher_test.go",
-        "proto/grpcapi/v1/policy.proto",
         "proto/notification/v1/notification.proto"
       ]
     },
@@ -153,7 +147,6 @@
         "modules/task/internal/infra/migrations/embed.go",
         "modules/task/internal/infra/repo.go",
         "modules/task/internal/infra/repo_test.go",
-        "proto/grpcapi/v1/policy.proto",
         "proto/task/v1/task.proto"
       ]
     }

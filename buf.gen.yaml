@@ -1,8 +1,8 @@
 version: v2
+# inputs 仅本地 proto 目录：grpcapi/v1/policy.proto 经 buf.yaml deps 从
+# BSR 解析参与编译，但不是生成输入——其 Go 类型由 grpcapi Go 模块提供。
 inputs:
   - directory: proto
-    exclude_paths:
-      - proto/grpcapi/v1/policy.proto
 plugins:
   - remote: buf.build/protocolbuffers/go:v1.36.10
     out: genproto

@@ -3,7 +3,7 @@
     "access": {
       "version": "0.1.0",
       "source": "worktree",
-      "commit": "c03d412ef61859c01762eca6b5551411a4c59812",
+      "commit": "b0eb7cc88bfd2ee6f4a28bea5e8a1602781b7102",
       "files": {
         "modules/access/domain/assignment.go": "412737dad1478a3c52e586a646dd6e991f6fd41ba2d2c50cb8997180080c5255",
         "modules/access/domain/guard_test.go": "5870fec731f970ec1d5496234e6c1a0381bde2bc6ac364a94cd0609aa4bba387",
@@ -19,14 +19,13 @@
         "modules/access/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
         "modules/access/internal/infra/repo.go": "a7736bc79be177ca1e478982485591b9d3c13bf7f56c281d4debb97795557759",
         "modules/access/internal/infra/repo_test.go": "34d515008de097033f2bb319d95b155ca55f80a6901c5ce496db0abe581a61a1",
-        "proto/access/v1/access.proto": "a19329bc7e9b661df4523b36a3f6743be3a97b72d80a54c877203014ec793c9f",
-        "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3"
+        "proto/access/v1/access.proto": "a19329bc7e9b661df4523b36a3f6743be3a97b72d80a54c877203014ec793c9f"
       }
     },
     "demo": {
       "version": "0.1.0",
       "source": "worktree",
-      "commit": "c03d412ef61859c01762eca6b5551411a4c59812",
+      "commit": "b0eb7cc88bfd2ee6f4a28bea5e8a1602781b7102",
       "files": {
         "modules/demo/domain/guard_test.go": "7c115692a26c3c146eb412c351797d2ff8b89c8ed8051af12966d38b36de6097",
         "modules/demo/domain/item.go": "27d50dc57ef7fe55ffe48c473ca20f522d6711f0b22af11e7c02b86ca8b8e1bb",
@@ -37,14 +36,13 @@
         "modules/demo/internal/infra/migrations/00001_init.sql": "7a70d2b2d49a5c4b77cf788c244c86682429f96c61bba92ac1e9dfcd796c4b91",
         "modules/demo/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
         "modules/demo/internal/infra/repo.go": "2e33b7829cc3d89955bb9070746a7f2e91ee3d62cfe3cd6f13a85852967faa87",
-        "proto/demo/v1/demo.proto": "08bde61c362ffd9f1bd3894084e27018d5a9ce1aaa640f623039f482673fff0e",
-        "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3"
+        "proto/demo/v1/demo.proto": "08bde61c362ffd9f1bd3894084e27018d5a9ce1aaa640f623039f482673fff0e"
       }
     },
     "identity": {
       "version": "0.1.1",
       "source": "worktree",
-      "commit": "c03d412ef61859c01762eca6b5551411a4c59812",
+      "commit": "b0eb7cc88bfd2ee6f4a28bea5e8a1602781b7102",
       "files": {
         "modules/identity/domain/guard_test.go": "8c41916589a57ff0a1b97211b3a96a3a8e10d280f2b3bb95ffe1a878d5669c3c",
         "modules/identity/domain/repo.go": "b7ae13ae893ad1f2ac142bc0701c1493925b90660a8a233050edfeb218cc9237",
@@ -62,14 +60,13 @@
         "modules/identity/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
         "modules/identity/internal/infra/repo.go": "c7fb855394f04d6b5a2ec7205b92967cb9ecdf53022229a3ddab3804384254ac",
         "modules/identity/internal/infra/repo_test.go": "56c6562e8d6169f74c604e94d94cf90d779ed04588bdc77572aceee3533e3f04",
-        "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3",
         "proto/identity/v1/identity.proto": "0d6626705a45bc3a656183df361155b151bdba437862b4c2d9f864d365dcd115"
       }
     },
     "notification": {
       "version": "0.1.0",
-      "source": "tag modules/notification/v0.1.0",
-      "commit": "f7eede05dd7ae3eef06acb7646d91f56e6c0e01e",
+      "source": "worktree",
+      "commit": "b0eb7cc88bfd2ee6f4a28bea5e8a1602781b7102",
       "files": {
         "modules/notification/domain/guard_test.go": "27b5c13ba7cb96a1e723f26013421482ff22ab1383ef38c41c8e5e56870527df",
         "modules/notification/domain/notification.go": "e0def5ce5e1e6d63da3da2d996b45876b8abe71a19b72aac28fb3e371566958b",
@@ -86,14 +83,13 @@
         "modules/notification/internal/infra/repo_test.go": "d290a438499ddfa8be6a15f8fdb0bc7426df631df33a8a31741c3a4ac01520cb",
         "modules/notification/internal/infra/watcher.go": "227ef6ef721458b1457328032e8d421eb3d82587233ea034b9519b6b436e3482",
         "modules/notification/internal/infra/watcher_test.go": "a515e629ebc2ce1789306658d94d85c93909910241ea9da2f21aab11de82302d",
-        "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3",
         "proto/notification/v1/notification.proto": "cf6623283bb0d9c8dbf5d2cd297b134d61793f4c79006adc4d9b229f7dee4c77"
       }
     },
     "organization": {
       "version": "0.1.1",
-      "source": "tag modules/organization/v0.1.1",
-      "commit": "f7eede05dd7ae3eef06acb7646d91f56e6c0e01e",
+      "source": "worktree",
+      "commit": "b0eb7cc88bfd2ee6f4a28bea5e8a1602781b7102",
       "files": {
         "modules/organization/domain/guard_test.go": "db559e3d223dec44410eced167103224907b30784cd585c2355c98971b07feaf",
         "modules/organization/domain/organization.go": "534c38da4a397789365a558a300e74fad83295bb68f1969653b0004bda78d049",
@@ -108,14 +104,13 @@
         "modules/organization/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
         "modules/organization/internal/infra/repo.go": "6d5213d9142163d6cada1d23df29641f1854db0d69d2ce1330ffd56a6147a645",
         "modules/organization/internal/infra/repo_test.go": "1d79a37b4d8db9966aac75e1f9e62678ee642428f0a394b59805f3ecd0c93e99",
-        "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3",
         "proto/organization/v1/organization.proto": "6216069651285f8299f9a3c381fac4d85e8f11d65f8c8b3e94b800a3bb8a2dd6"
       }
     },
     "session": {
       "version": "0.1.0",
       "source": "worktree",
-      "commit": "c03d412ef61859c01762eca6b5551411a4c59812",
+      "commit": "b0eb7cc88bfd2ee6f4a28bea5e8a1602781b7102",
       "files": {
         "modules/session/domain/guard_test.go": "4e09e7f6311d8d683985be6c555049306d391c5e4b4f91097350c6b27370312a",
         "modules/session/domain/repo.go": "c5e3256f8b7b712d481bc1d627e4091ae5532150e9974d8dcdca2e991037cd8a",
@@ -135,14 +130,13 @@
         "modules/session/internal/infra/userreader.go": "d27adae73c4e3f413c5a12128ff0987f4f9193d8a4874e0665a268831d449a74",
         "modules/session/internal/infra/watcher.go": "17eded50eb72a702bb9e4e4ced06a910d44f6d1b122e41cc391bb0a4fe791bad",
         "modules/session/internal/infra/watcher_test.go": "b4b08f88b44246f38af14085b04485ff6faac272f8ed6029783bcfd813be2f85",
-        "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3",
         "proto/session/v1/session.proto": "7a676234ea0476b05bbab0019f63f73b0d54ef14dfdb6cefa8633904b6fa8c54"
       }
     },
     "task": {
       "version": "0.1.0",
       "source": "worktree",
-      "commit": "718dac7522d6088f0474e2b834b48ac9c40ba0a2",
+      "commit": "b0eb7cc88bfd2ee6f4a28bea5e8a1602781b7102",
       "files": {
         "modules/task/domain/guard_test.go": "97e9292f5f687d9710177b25051556872bc8ec80723c65bbf4a7688389cfa5cb",
         "modules/task/domain/task.go": "0ebee78d2db13d94a65a42642de1f8ebacb2a48707630c764f09a28f90f85a46",
@@ -156,7 +150,6 @@
         "modules/task/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
         "modules/task/internal/infra/repo.go": "6ad3a49a5380764c8118649204cf6aee1157ac84f9efefc1dc022f804917b130",
         "modules/task/internal/infra/repo_test.go": "b7896fc4437e6f3ad4e6e07998cee188f4d81fbea878a812a54b1b42f19475b3",
-        "proto/grpcapi/v1/policy.proto": "3a17c483254c2f6b0f4bba3e8ac18cbcc203bc98371deb98a4d00a4226b577e3",
         "proto/task/v1/task.proto": "d783e653597809ae2c789f02d554d050da6bddef869f750e195f7e406c5c6dd4"
       }
     }
