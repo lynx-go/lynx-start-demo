@@ -13,7 +13,8 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/lynx-go/grpcapi/server"
 	"github.com/lynx-go/lynx"
-	"github.com/lynx-go/lynx-start/kernel"
+	"github.com/lynx-go/lynx-start"
+	"github.com/lynx-go/lynx-start/contrib/bunx"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
@@ -43,7 +44,7 @@ func Assemble(deps kernel.Deps) (kernel.Assembly, error) {
 	if deps.Bus == nil {
 		return kernel.Assembly{}, fmt.Errorf("notification: 需要事件总线（kernel.Deps.Bus）——请更新 scaffold bootstrap.NewDeps")
 	}
-	uc := appnotification.New(infranotification.NewRepository(deps.DB))
+	uc := appnotification.New(infranotification.NewRepository(bunx.MustDB(deps)))
 	return kernel.Assembly{
 		Registrations: []server.Registration{newRegistration(NewService(uc))},
 		Services: []lynx.Service{

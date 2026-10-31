@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/lynx-go/lynx-start-demo/modules/notification/domain"
-	"github.com/lynx-go/lynx-start/kernel/crud"
-	"github.com/lynx-go/lynx-start/kernel/idgen"
+	"github.com/lynx-go/lynx-start/crud"
+	"github.com/lynx-go/lynx-start/idgen"
 )
 
 // UseCase 是通知模块的用例集。

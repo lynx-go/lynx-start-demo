@@ -7,7 +7,7 @@ import (
 
 	"github.com/lynx-go/lynx-start-demo/modules/access/domain"
 	"github.com/lynx-go/lynx-start-demo/modules/access/internal/infra/migrations"
-	"github.com/lynx-go/lynx-start/kernel/testutil"
+	"github.com/lynx-go/lynx-start/contrib/bunx/testutil"
 )
 
 func TestRepo(t *testing.T) {

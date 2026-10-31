@@ -1,0 +1,180 @@
+{
+  "modules": {
+    "access": {
+      "version": "0.2.0",
+      "source": "worktree",
+      "commit": "923ed281e86fe7bce7f2367fd6656ebcde21014b",
+      "files": {
+        "modules/access/domain/assignment.go": "62755b337ee0d463dbe1fe63b05a1c918059461a498b5efc3619d8ad29eb9b43",
+        "modules/access/domain/guard_test.go": "d6d27baa084a05849057210a830476a73c3fb794afc33f1adfe3ab0171c78da0",
+        "modules/access/domain/repo.go": "6c97beaec658f5682901e842cf4cfcd51febf64bd247824d8da746df248e85f6",
+        "modules/access/internal/api/enricher.go": "f2d66c028cb6912e9c09e08dd6ccb66bad6b1c60b79128ba12c7af015b75cb53",
+        "modules/access/internal/api/module.go": "5e27aba0171013361b1e2d09d769360ee53737aca64616a6aabe3fdb7607b9c2",
+        "modules/access/internal/api/policy_test.go": "4e563513fce2a9a7a7364cfed42997e6604bb34e608b4595812e6fa05e9c36e0",
+        "modules/access/internal/api/service.go": "1311a21dcc3fe28f24fd9f5c6b7c7389119c402016a02c2f75a43f457682c02f",
+        "modules/access/internal/app/access.go": "d56413d848552ef7e92a8aaec71fb3fe26962265b2d4d585e1fd219205a783d1",
+        "modules/access/internal/app/access_test.go": "194ebd54ed84730c3683e295a988b850a6a11cb41b25b030dbe094be90c4d698",
+        "modules/access/internal/app/config.go": "a62c55204069ce14ce994c9e3494fc9555fca3ca584c7392ed600cbaeee2883d",
+        "modules/access/internal/infra/migrations/00001_init.sql": "bebb77c2a573d1c7b89f38c04f757f0b305413a69b3eb5a5568b290164cbb956",
+        "modules/access/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
+        "modules/access/internal/infra/repo.go": "2b86994ab30625cb16b8d127c5d67983e6d55e86de7627f44ac60d5ab3667a4c",
+        "modules/access/internal/infra/repo_test.go": "9f9c3812baeb727e78150bacb74212c71f46ff4916d01efaa6444d91129d4678",
+        "proto/access/v1/access.proto": "a19329bc7e9b661df4523b36a3f6743be3a97b72d80a54c877203014ec793c9f"
+      }
+    },
+    "audit": {
+      "version": "0.2.0",
+      "source": "worktree",
+      "commit": "923ed281e86fe7bce7f2367fd6656ebcde21014b",
+      "files": {
+        "modules/audit/domain/guard_test.go": "2482d1abe35cde3202e2750a77184e49c34e0100fbd2372fdbb653f5632e210d",
+        "modules/audit/domain/record.go": "ea126eb2f36afd558ce8bf0bb13c21542750b8473a37016adb938815f9b326c8",
+        "modules/audit/domain/record_test.go": "d9b411a73cd76326f90e245227d7dab426bdce20c60de3f796319b27458087d1",
+        "modules/audit/domain/repo.go": "0392ea28b45c110f11435bd360abec9593984c5ba39fc374ef8e348227fec6b5",
+        "modules/audit/internal/api/interceptor.go": "775cb550e0cd99b7d127d76906febdb1fcb64ede92667cae65ec1e611a530ad6",
+        "modules/audit/internal/api/module.go": "607ff1c6c93b0f386cfc101eb63a93e50937fa63435f62bb19bcd86171ccc2d4",
+        "modules/audit/internal/api/policy_test.go": "14e039416816765b73acf6e034c341b7f9b774f28741e6067cbc52719d3c3a19",
+        "modules/audit/internal/api/service.go": "b0a090b7ad74877ae9ba30d5cf513caf60758bfcd4310721fb63ed778d01190e",
+        "modules/audit/internal/app/audit.go": "1451c5cde31f834a34d9a285be5cc33fa9a44751d18b0409e3134d9d46cf69b1",
+        "modules/audit/internal/app/audit_test.go": "c5c2529673cccc01187306606a392c1a9feab7f184e9253b60ff1687389e9cab",
+        "modules/audit/internal/infra/migrations/00001_init.sql": "c447c52411499ed4c3f44c2bf976b9c36593e6badb3b9eb4f206aadd5ec23977",
+        "modules/audit/internal/infra/migrations/embed.go": "70b41947d4497ed0ef9ef55ab01f8b2a0de52e9523df4c225c989fdd435f5dec",
+        "modules/audit/internal/infra/repo.go": "51117999fb22448e53b0bdea437c822cc7773b698736abc939a2579ef84b4346",
+        "modules/audit/internal/infra/repo_test.go": "551933f9f1b2d797f6671fea96aaa528d442bb35bbe0c0c93d50b5185572d71d",
+        "modules/audit/internal/infra/writer.go": "ca9b9cc03185599a778d05f06679d2bc587144c25b03a63b286e0b0e91afb96c",
+        "proto/audit/v1/audit.proto": "bac92f4445c95ec8584e9bf82681681c0a2016f73fda39ff48bc0671e664ff0e"
+      }
+    },
+    "demo": {
+      "version": "0.2.0",
+      "source": "worktree",
+      "commit": "923ed281e86fe7bce7f2367fd6656ebcde21014b",
+      "files": {
+        "modules/demo/domain/guard_test.go": "bfd7b969f4bd9362495fe1087746d03a4f73d1c0165bac3dbb4ee70f68b93848",
+        "modules/demo/domain/item.go": "8040e76b949cb60f299fecc05870d9ffb12cb7f5069129cae8bb140081b20ef3",
+        "modules/demo/domain/repo.go": "32c9b768ece018b49d9cfaaa730d72390b63168d8d2ee03b455479d4e9bd5388",
+        "modules/demo/internal/api/module.go": "a7d1de68f782d70df6c4fee6ce82cd652aac248c65bdfa305a4af26a4bd044e2",
+        "modules/demo/internal/api/service.go": "22e54e41942941974fb2b7072624ee96a45e70c41ad63104d9cf8ed39a41982a",
+        "modules/demo/internal/app/demo.go": "5853336203caa61033e041c093cb5df674fa35ab54b9f4355685e9015b10ca62",
+        "modules/demo/internal/infra/migrations/00001_init.sql": "7a70d2b2d49a5c4b77cf788c244c86682429f96c61bba92ac1e9dfcd796c4b91",
+        "modules/demo/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
+        "modules/demo/internal/infra/repo.go": "fcbf6895a2ae3cf1b8254038befc300d339b59235892243fb29909e11ab7a3e8",
+        "proto/demo/v1/demo.proto": "08bde61c362ffd9f1bd3894084e27018d5a9ce1aaa640f623039f482673fff0e"
+      }
+    },
+    "identity": {
+      "version": "0.2.0",
+      "source": "worktree",
+      "commit": "923ed281e86fe7bce7f2367fd6656ebcde21014b",
+      "files": {
+        "modules/identity/domain/guard_test.go": "046448b95dbe56147848023066fcd62a10dad03ad5237bd4d1935b00d458ec5a",
+        "modules/identity/domain/repo.go": "b7ae13ae893ad1f2ac142bc0701c1493925b90660a8a233050edfeb218cc9237",
+        "modules/identity/domain/user.go": "4b1756cd54662b62342fa6d77a8625ad7f78a1a1500e74c5d40a8852245a9581",
+        "modules/identity/domain/user_test.go": "6eec40162d03e588495b96c077716e00f8d7bb6d224409be256df056a26d4a82",
+        "modules/identity/internal/api/authenticator.go": "992853543d753e826cc6ed78c683e3b11d7279703cba33e6db58ddd50d97dfec",
+        "modules/identity/internal/api/authenticator_test.go": "b08412ba29774668fe6e58c96653bb20841cec8befa0ed055511633ec807786a",
+        "modules/identity/internal/api/module.go": "5dde02e6578643d604a4ffe6e24ff5d8af94117a1d50999e9340a88a1cd4feea",
+        "modules/identity/internal/api/policy_test.go": "623a2419263158a2131262ab1ff64af9921391a2af468c15f745fc5e3ded950b",
+        "modules/identity/internal/api/service.go": "63250ccdebf1822d0d41dab6e0afaa026d5f2f089ff8cb39d4fb436fe7507520",
+        "modules/identity/internal/app/config.go": "1edf0c09b414e6b4fe1403fffa3a321a5ffd0f18140862313372a1c2de22563d",
+        "modules/identity/internal/app/identity.go": "1f796e47ab7663a25592e7d6e93e78658ad5ea275873d3a24e6940095c59f2e4",
+        "modules/identity/internal/app/identity_test.go": "57fa12d2f11ba13a1eae1c221f8736b8ddf44898f32b95c52942afd72b5e93d4",
+        "modules/identity/internal/infra/migrations/00001_init.sql": "182d0d456ad16cb957cdede6b786fb323a904d28f5b6a8a29bc879afebecb760",
+        "modules/identity/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
+        "modules/identity/internal/infra/repo.go": "bb503523faa0d7ddb86a2d4ebc244121ee4e1d3073f31c6f5d1b89aa73d2ecf9",
+        "modules/identity/internal/infra/repo_test.go": "6577cccdb41e79e2345f3de551d1187d398555a480d043e07a61c83d95a030bd",
+        "proto/identity/v1/identity.proto": "0d6626705a45bc3a656183df361155b151bdba437862b4c2d9f864d365dcd115"
+      }
+    },
+    "notification": {
+      "version": "0.2.0",
+      "source": "worktree",
+      "commit": "923ed281e86fe7bce7f2367fd6656ebcde21014b",
+      "files": {
+        "modules/notification/domain/guard_test.go": "7e0a3720c3afac529c0e89d0b3c8ab0df838066b4ac7041beff07fd083de10e7",
+        "modules/notification/domain/notification.go": "df9fbe54c1fdfd1b0faccc1448d748ae1aeb1a0c4e0ee81def85bd1ac961523e",
+        "modules/notification/domain/notification_test.go": "2c1cf335b03d208d5f591eb4a6e6b71c1336083c8240b6d956a973d15927483d",
+        "modules/notification/domain/repo.go": "24693c3bc34354ca69a7354e4ac099f399d7ed7b459adfce81cda06d79868520",
+        "modules/notification/internal/api/module.go": "76b084f1d6c7f79e708a5f89778c62053d5d1bfd7d7e6c746035689ba41e6075",
+        "modules/notification/internal/api/policy_test.go": "f24a4a10291f0321cfaf5c1fb43ec76b6b8986239e7b31708a192ae1153555e1",
+        "modules/notification/internal/api/service.go": "63ab9051f037e254313d25df66274970d465ac0dbc835784280a681f8fd68c85",
+        "modules/notification/internal/app/notification.go": "f2ede67017d8e9d99ece050d12131d6d2ff834ffd265c522448a5e81744245cc",
+        "modules/notification/internal/app/notification_test.go": "eb43c7380d8e9b039832e890e3a170056e037e721b51dd5a1860e9a8e9a9bed9",
+        "modules/notification/internal/infra/migrations/00001_init.sql": "b94e8595c79b13970be4065aed3c2355e570ce1541f17c8c5475ee6a5e2c708f",
+        "modules/notification/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
+        "modules/notification/internal/infra/repo.go": "d96e42f04811c906b79059e9c725f5a5708e772e2e6e635d0307481f2a71ab6d",
+        "modules/notification/internal/infra/repo_test.go": "b22b4cf706f5cdcd5df261349c3695bfbc9de57b4150bb2c496977c404ffe87a",
+        "modules/notification/internal/infra/watcher.go": "40a525f079205d386bf4f650e72d33eaa5b590f8e2a1967a5343cb2ae4c3e6ce",
+        "modules/notification/internal/infra/watcher_test.go": "f92e833b5038f6168b7eab803d68ec70941987eb44a548d888650e8d58811458",
+        "proto/notification/v1/notification.proto": "cf6623283bb0d9c8dbf5d2cd297b134d61793f4c79006adc4d9b229f7dee4c77"
+      }
+    },
+    "organization": {
+      "version": "0.2.0",
+      "source": "worktree",
+      "commit": "923ed281e86fe7bce7f2367fd6656ebcde21014b",
+      "files": {
+        "modules/organization/domain/guard_test.go": "48a3f76e800aae23d974224218b45ffdb21d7265d2f47361355c11cce46238ad",
+        "modules/organization/domain/organization.go": "ef14e630248ee294b7918e42e1b0e46d4ee75a3b1226c26960896a81741c0e45",
+        "modules/organization/domain/organization_test.go": "d727ccb0ac1d1e31980ff3e5352cb86311ad4fe4b82145c9d0dd6f0b67de8cd5",
+        "modules/organization/domain/repo.go": "ecfc356cf5e8a631d98b4813e33e4ef94c22348c1d9dbc0f8a08c352f38c3079",
+        "modules/organization/internal/api/module.go": "f2b2b6b77b5345d9a7139d7af059b002c20f2cf89a7bff53b6555f5ba1335479",
+        "modules/organization/internal/api/policy_test.go": "7f2a84d7d2a41843aab25f2ff9e3eedc9285439793a6c20a93749bea0bf86af8",
+        "modules/organization/internal/api/service.go": "b7187533865c89f3d71595360e9cde132a52ca9f1ab6b5d42a37e12b218b98a0",
+        "modules/organization/internal/app/organization.go": "bb356d29d0754266ff3a8e9d7b1151aeeb85bc874e73022b1ce275eee964f1c3",
+        "modules/organization/internal/app/organization_test.go": "41650a3a2ae793ba96e0216eae322fc0a9da05b52a0233838c5d095ba8f2998d",
+        "modules/organization/internal/infra/migrations/00001_init.sql": "e951645aecb61d3ff8806b7f8b54bbf55c19f43cf6b59e4df4d8699443dadfda",
+        "modules/organization/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
+        "modules/organization/internal/infra/repo.go": "33e27d39f889419b069ba67c17832702f2fef7a47365afb2bd2581c3e9c707b8",
+        "modules/organization/internal/infra/repo_test.go": "208a23312d30f1afe7d0a89341ce9b03ffdb63f70a078bbee23e42d6e66ebc72",
+        "proto/organization/v1/organization.proto": "6216069651285f8299f9a3c381fac4d85e8f11d65f8c8b3e94b800a3bb8a2dd6"
+      }
+    },
+    "session": {
+      "version": "0.2.0",
+      "source": "worktree",
+      "commit": "923ed281e86fe7bce7f2367fd6656ebcde21014b",
+      "files": {
+        "modules/session/domain/guard_test.go": "34466d7d3ed373286f0876e1d2af8a7135e1213a97698cb73280732c3d19155a",
+        "modules/session/domain/repo.go": "c5e3256f8b7b712d481bc1d627e4091ae5532150e9974d8dcdca2e991037cd8a",
+        "modules/session/domain/session.go": "e95525eb790345a81bb69b4ee983d27b3a60b9b8827cdc42b8a73db80e8466e0",
+        "modules/session/domain/session_test.go": "d4ffb36eccdf7700c82561191437d40a3c444a98a8f3b85a3a1cf439b0d4704f",
+        "modules/session/internal/api/authenticator.go": "e25c2cd8c9a70b6a4ca173a6953365dd58f656791733cdcc5d232b6d743d0c05",
+        "modules/session/internal/api/module.go": "b1ff06af2c9927c8c6bc8e0951b63c62b4d9eb42ab799269be07f1c67c0c0c25",
+        "modules/session/internal/api/policy_test.go": "9431bc0b161440e55bba1d7a32467d69d34bdecc741e539c8d6c68116b097afb",
+        "modules/session/internal/api/service.go": "b3c6b40667528a2ec9828f2a797e9cfe9c4137679c7ddf2cf8e96bea41509538",
+        "modules/session/internal/app/config.go": "7eb3c75f671c25c9c998db4879a35c5793be3a742d60b8c685557a8b55c886a6",
+        "modules/session/internal/app/session.go": "0d2d6b5ecfa16411b2e12ded9c31670fcac045b6f3ab68f438aa229eefb2d68d",
+        "modules/session/internal/app/session_test.go": "036a389bddb1b0fad334a3f22eb37fb45517c7dbbd7adc7c56870ead8a010f5d",
+        "modules/session/internal/infra/migrations/00001_init.sql": "b866995af85c6a201793c2ab1254a6679f8ad6d4b56c12d7f6d2fadfa1276bc1",
+        "modules/session/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
+        "modules/session/internal/infra/repo.go": "3ec441aebe2b2856849ae2f2822800c3e246e9f6a27010a45cd14121cc125de2",
+        "modules/session/internal/infra/repo_test.go": "d52ff717fff07ee7bde90ecc90ecdc5605ef0711a51b3070fd4f0e2998982880",
+        "modules/session/internal/infra/userreader.go": "d27adae73c4e3f413c5a12128ff0987f4f9193d8a4874e0665a268831d449a74",
+        "modules/session/internal/infra/watcher.go": "7646480b1a3eac6dce33e9812f1ff93aa0c9b03f86be4cbd49071bcdc547fe9e",
+        "modules/session/internal/infra/watcher_test.go": "0fac993cdf344ebb114a88f7ded1ebb08cd4aaa96d0bcc0cdf71831c73c8660a",
+        "proto/session/v1/session.proto": "7a676234ea0476b05bbab0019f63f73b0d54ef14dfdb6cefa8633904b6fa8c54"
+      }
+    },
+    "task": {
+      "version": "0.2.0",
+      "source": "worktree",
+      "commit": "923ed281e86fe7bce7f2367fd6656ebcde21014b",
+      "files": {
+        "modules/task/domain/guard_test.go": "ba66853c6086fc894c80932efc4ead385efefca43344c9290cbda98de6c8ad60",
+        "modules/task/domain/task.go": "3253c968864c2d7bc1b8d813d3424dceb475c7c8afda4064810c19ecd1a0caca",
+        "modules/task/domain/task_test.go": "007a9e840699297a62238732100412b56cd438182ab3bfd50c04080f3432bb94",
+        "modules/task/internal/api/module.go": "cb9d13b6b36db1b369e74d9f3f59df071dc27057328c541c8b8d9e66c53be8e9",
+        "modules/task/internal/api/policy_test.go": "b18d7d7bbfa7d7ffbf6df36f1b4faaf5ee84c4b4455e3c9a090170ed62db4876",
+        "modules/task/internal/api/service.go": "62c4738dddaad70109a113e925303ab37162ebd9e4c91bcd6925886f0c06c8b7",
+        "modules/task/internal/app/task.go": "04608c7828fee3e1ac87549c18bd78013db5617afe64e49589e3861d94bf849a",
+        "modules/task/internal/app/task_test.go": "00527d8c490c3dde9ba43dc223317a949bc1b995dd08838b0faa701e9abbf2ad",
+        "modules/task/internal/infra/migrations/00001_init.sql": "8c0a58cecc40ff9104965e3f7d4fec0624fd45d7ecb1aaf47ffe2858c32d1ab9",
+        "modules/task/internal/infra/migrations/embed.go": "a9af91641d68eadc0e0a7050112095bd39383c1007dbaadb4eb2a443748a41e2",
+        "modules/task/internal/infra/repo.go": "d3571ac66012f3d32d6687aa9d8c6bf7ae1eabbdbe945f9f93a760142df649bd",
+        "modules/task/internal/infra/repo_test.go": "95d7d84f5b7be1b28c7728345b3a579e1f4575ad1a5692d2ab28988fc36b4aa7",
+        "proto/task/v1/task.proto": "d783e653597809ae2c789f02d554d050da6bddef869f750e195f7e406c5c6dd4"
+      }
+    }
+  }
+}

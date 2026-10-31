@@ -8,7 +8,7 @@ import (
 
 	"github.com/lynx-go/lynx-start-demo/modules/organization/domain"
 	"github.com/lynx-go/lynx-start-demo/modules/task/domain"
-	"github.com/lynx-go/lynx-start/kernel/testutil"
+	"github.com/lynx-go/lynx-start/contrib/bunx/testutil"
 )
 
 // fakeRepo 是内存任务仓储。

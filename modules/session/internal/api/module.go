@@ -14,10 +14,11 @@ import (
 	"github.com/lynx-go/grpcapi/authn"
 	"github.com/lynx-go/grpcapi/server"
 	"github.com/lynx-go/lynx"
-	"github.com/lynx-go/lynx-start/kernel"
-	"github.com/lynx-go/lynx-start/kernel/clock"
-	"github.com/lynx-go/lynx-start/kernel/configkit"
-	"github.com/lynx-go/lynx-start/kernel/jwt"
+	"github.com/lynx-go/lynx-start"
+	"github.com/lynx-go/lynx-start/clock"
+	"github.com/lynx-go/lynx-start/configkit"
+	"github.com/lynx-go/lynx-start/contrib/bunx"
+	"github.com/lynx-go/lynx-start/jwt"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
@@ -42,7 +43,7 @@ func Module() kernel.Module {
 				"secret":      appsession.DefaultDevSecret,
 				"access_ttl":  "15m",
 				"refresh_ttl": "720h",
-				"issuer":      "lynx-start",
+				"issuer":      "lynx-mods",
 			},
 		},
 	}
@@ -75,8 +76,8 @@ func Assemble(deps kernel.Deps) (kernel.Assembly, error) {
 	}
 
 	uc := appsession.New(
-		infrasession.NewRepository(deps.DB),
-		infrasession.NewUserReader(deps.DB), // DependsOn: identity domain 只读消费
+		infrasession.NewRepository(bunx.MustDB(deps)),
+		infrasession.NewUserReader(bunx.MustDB(deps)), // DependsOn: identity domain 只读消费
 		deps.Tx, deps.Events, tokens, clock.System{},
 	)
 

@@ -11,7 +11,7 @@ import (
 	"github.com/lynx-go/lynx-start-demo/modules/identity/domain"
 	"github.com/lynx-go/lynx-start-demo/modules/organization/domain"
 
-	"github.com/lynx-go/lynx-start/kernel/uow/buntx"
+	"github.com/lynx-go/lynx-start/contrib/bunx/buntx"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/driver/pgdriver"
 )

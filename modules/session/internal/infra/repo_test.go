@@ -7,7 +7,7 @@ import (
 
 	"github.com/lynx-go/lynx-start-demo/modules/session/domain"
 	"github.com/lynx-go/lynx-start-demo/modules/session/internal/infra/migrations"
-	"github.com/lynx-go/lynx-start/kernel/testutil"
+	"github.com/lynx-go/lynx-start/contrib/bunx/testutil"
 )
 
 var t0 = time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC)

@@ -9,9 +9,9 @@ import (
 
 	"github.com/lynx-go/lynx-start-demo/modules/identity/domain"
 	"github.com/lynx-go/lynx-start-demo/modules/session/domain"
-	"github.com/lynx-go/lynx-start/kernel/clock"
-	"github.com/lynx-go/lynx-start/kernel/jwt"
-	"github.com/lynx-go/lynx-start/kernel/testutil"
+	"github.com/lynx-go/lynx-start/clock"
+	"github.com/lynx-go/lynx-start/contrib/bunx/testutil"
+	"github.com/lynx-go/lynx-start/jwt"
 )
 
 // fakeSessionRepo 是会话仓储端口的内存实现。

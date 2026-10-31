@@ -11,7 +11,8 @@ import (
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/lynx-go/grpcapi/server"
-	"github.com/lynx-go/lynx-start/kernel"
+	"github.com/lynx-go/lynx-start"
+	"github.com/lynx-go/lynx-start/contrib/bunx"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
@@ -37,8 +38,8 @@ func Module() kernel.Module {
 // 适配器）→ 用例 → 处理器 → 注册。源码归应用所有：按需修改。
 func Assemble(deps kernel.Deps) (kernel.Assembly, error) {
 	uc := apptask.New(
-		infratask.NewRepository(deps.DB),
-		infratask.NewOrganizationReader(deps.DB), // DependsOn: organization domain 只读消费
+		infratask.NewRepository(bunx.MustDB(deps)),
+		infratask.NewOrganizationReader(bunx.MustDB(deps)), // DependsOn: organization domain 只读消费
 		deps.Tx, deps.Events,
 	)
 	return kernel.Assembly{

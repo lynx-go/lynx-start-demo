@@ -13,11 +13,11 @@ import (
 
 	"github.com/lynx-go/lynx-start-demo/modules/identity/domain"
 	"github.com/lynx-go/lynx-start-demo/modules/session/domain"
-	"github.com/lynx-go/lynx-start/kernel/clock"
-	"github.com/lynx-go/lynx-start/kernel/events"
-	"github.com/lynx-go/lynx-start/kernel/idgen"
-	"github.com/lynx-go/lynx-start/kernel/jwt"
-	"github.com/lynx-go/lynx-start/kernel/uow"
+	"github.com/lynx-go/lynx-start/clock"
+	"github.com/lynx-go/lynx-start/events"
+	"github.com/lynx-go/lynx-start/idgen"
+	"github.com/lynx-go/lynx-start/jwt"
+	"github.com/lynx-go/lynx-start/uow"
 )
 
 // 令牌派生用途（kernel/secretkey purpose 域隔离）：访问/刷新两类令牌

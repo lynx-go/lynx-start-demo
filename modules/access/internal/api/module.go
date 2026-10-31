@@ -12,8 +12,9 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/lynx-go/grpcapi/authn"
 	"github.com/lynx-go/grpcapi/server"
-	"github.com/lynx-go/lynx-start/kernel"
-	"github.com/lynx-go/lynx-start/kernel/configkit"
+	"github.com/lynx-go/lynx-start"
+	"github.com/lynx-go/lynx-start/configkit"
+	"github.com/lynx-go/lynx-start/contrib/bunx"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
@@ -53,8 +54,8 @@ func Assemble(deps kernel.Deps) (kernel.Assembly, error) {
 	}
 
 	uc := appaccess.New(
-		infraaccess.NewRepository(deps.DB),
-		infraaccess.NewUserReader(deps.DB), // DependsOn: identity domain 只读消费
+		infraaccess.NewRepository(bunx.MustDB(deps)),
+		infraaccess.NewUserReader(bunx.MustDB(deps)), // DependsOn: identity domain 只读消费
 		deps.Tx, deps.Events, cfg.Roles, nil,
 	)
 

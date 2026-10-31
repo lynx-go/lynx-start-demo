@@ -1,7 +1,7 @@
 package identity
 
 import (
-	"github.com/lynx-go/lynx-start/kernel/testutil"
+	"github.com/lynx-go/lynx-start/contrib/bunx/testutil"
 
 	"go/parser"
 	"go/token"

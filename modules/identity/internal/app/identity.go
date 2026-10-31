@@ -8,12 +8,12 @@ import (
 	"errors"
 
 	"github.com/lynx-go/lynx-start-demo/modules/identity/domain"
-	"github.com/lynx-go/lynx-start/kernel/clock"
-	"github.com/lynx-go/lynx-start/kernel/events"
-	"github.com/lynx-go/lynx-start/kernel/idgen"
-	"github.com/lynx-go/lynx-start/kernel/jwt"
-	"github.com/lynx-go/lynx-start/kernel/password"
-	"github.com/lynx-go/lynx-start/kernel/uow"
+	"github.com/lynx-go/lynx-start/clock"
+	"github.com/lynx-go/lynx-start/events"
+	"github.com/lynx-go/lynx-start/idgen"
+	"github.com/lynx-go/lynx-start/jwt"
+	"github.com/lynx-go/lynx-start/password"
+	"github.com/lynx-go/lynx-start/uow"
 )
 
 // PurposeAccessToken 是访问令牌的密钥派生用途标签（kernel/secretkey 的

@@ -7,10 +7,10 @@ import (
 	"time"
 
 	"github.com/lynx-go/lynx-start-demo/modules/demo/domain"
-	"github.com/lynx-go/lynx-start/kernel/crud"
-	"github.com/lynx-go/lynx-start/kernel/events"
-	"github.com/lynx-go/lynx-start/kernel/idgen"
-	"github.com/lynx-go/lynx-start/kernel/uow"
+	"github.com/lynx-go/lynx-start/crud"
+	"github.com/lynx-go/lynx-start/events"
+	"github.com/lynx-go/lynx-start/idgen"
+	"github.com/lynx-go/lynx-start/uow"
 )
 
 // UseCase 是样例模块的用例集。

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lynx-go/lynx-start/kernel/secretkey"
+	"github.com/lynx-go/lynx-start/secretkey"
 )
 
 // DefaultDevSecret 是安装器写入 config.yaml 的开发占位密钥。
@@ -29,7 +29,7 @@ func (c *Config) ApplyDefaults() {
 	c.Secret = DefaultDevSecret
 	c.AccessTTL = 15 * time.Minute
 	c.RefreshTTL = 30 * 24 * time.Hour
-	c.Issuer = "lynx-start"
+	c.Issuer = "lynx-mods"
 }
 
 // Validate fail-fast 校验（组合根调用）。

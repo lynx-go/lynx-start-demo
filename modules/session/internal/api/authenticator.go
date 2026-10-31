@@ -8,8 +8,8 @@ import (
 
 	"github.com/lynx-go/grpcapi/authn"
 	"github.com/lynx-go/grpcapi/principal"
-	"github.com/lynx-go/lynx-start/kernel/clock"
-	"github.com/lynx-go/lynx-start/kernel/jwt"
+	"github.com/lynx-go/lynx-start/clock"
+	"github.com/lynx-go/lynx-start/jwt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )

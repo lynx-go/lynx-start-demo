@@ -13,7 +13,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/lynx-go/lynx-start/kernel/errcode"
+	"github.com/lynx-go/lynx-start/errcode"
 )
 
 // space 是本模块的错误码区段（契约⑤）。凭证类错误沿用 identity 区段

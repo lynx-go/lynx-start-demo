@@ -9,7 +9,7 @@ import (
 	"github.com/lynx-go/lynx"
 	"github.com/lynx-go/lynx-start-demo/modules/notification/domain"
 	appnotification "github.com/lynx-go/lynx-start-demo/modules/notification/internal/app"
-	"github.com/lynx-go/lynx-start/kernel/events"
+	"github.com/lynx-go/lynx-start/events"
 	"github.com/lynx-go/lynx/eventbus"
 )
 

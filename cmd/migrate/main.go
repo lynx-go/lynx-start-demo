@@ -14,8 +14,8 @@ import (
 	"os"
 
 	"github.com/lynx-go/lynx-start-demo/modules"
-	"github.com/lynx-go/lynx-start/kernel"
-	"github.com/lynx-go/lynx-start/kernel/goosekit"
+	"github.com/lynx-go/lynx-start/goosekit"
+	"github.com/lynx-go/lynx-start/compose"
 	"github.com/uptrace/bun/driver/pgdriver"
 )
 
@@ -56,7 +56,7 @@ func main() {
 		}
 		fmt.Printf("module %-16s version %d\n", m.Module.Name, v)
 	}
-	_ = kernel.ValidateModules(kernel.Descriptors(installed))
+	_ = compose.ValidateModules(compose.Descriptors(installed))
 }
 
 func fatal(v any) {

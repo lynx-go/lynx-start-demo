@@ -2,11 +2,11 @@
   "schema": 1,
   "name": "lynx-start-demo",
   "modulePath": "github.com/lynx-go/lynx-start-demo",
-  "registry": "/home/qiulin/workspace/qiulin/lynx-start",
+  "registry": "/home/qiulin/workspace/qiulin/lynx-mods",
   "modules": [
     {
       "name": "demo",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "files": [
         "modules/demo/domain/guard_test.go",
         "modules/demo/domain/item.go",
@@ -22,7 +22,7 @@
     },
     {
       "name": "identity",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "files": [
         "modules/identity/domain/guard_test.go",
         "modules/identity/domain/repo.go",
@@ -45,7 +45,7 @@
     },
     {
       "name": "session",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "files": [
         "modules/session/domain/guard_test.go",
         "modules/session/domain/repo.go",
@@ -70,7 +70,7 @@
     },
     {
       "name": "access",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "files": [
         "modules/access/domain/assignment.go",
         "modules/access/domain/guard_test.go",
@@ -91,7 +91,7 @@
     },
     {
       "name": "organization",
-      "version": "0.1.1",
+      "version": "0.2.0",
       "files": [
         "modules/organization/domain/guard_test.go",
         "modules/organization/domain/organization.go",
@@ -111,7 +111,7 @@
     },
     {
       "name": "notification",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "files": [
         "modules/notification/domain/guard_test.go",
         "modules/notification/domain/notification.go",
@@ -133,7 +133,7 @@
     },
     {
       "name": "task",
-      "version": "0.1.0",
+      "version": "0.2.0",
       "files": [
         "modules/task/domain/guard_test.go",
         "modules/task/domain/task.go",
@@ -148,6 +148,28 @@
         "modules/task/internal/infra/repo.go",
         "modules/task/internal/infra/repo_test.go",
         "proto/task/v1/task.proto"
+      ]
+    },
+    {
+      "name": "audit",
+      "version": "0.2.0",
+      "files": [
+        "modules/audit/domain/guard_test.go",
+        "modules/audit/domain/record.go",
+        "modules/audit/domain/record_test.go",
+        "modules/audit/domain/repo.go",
+        "modules/audit/internal/api/interceptor.go",
+        "modules/audit/internal/api/module.go",
+        "modules/audit/internal/api/policy_test.go",
+        "modules/audit/internal/api/service.go",
+        "modules/audit/internal/app/audit.go",
+        "modules/audit/internal/app/audit_test.go",
+        "modules/audit/internal/infra/migrations/00001_init.sql",
+        "modules/audit/internal/infra/migrations/embed.go",
+        "modules/audit/internal/infra/repo.go",
+        "modules/audit/internal/infra/repo_test.go",
+        "modules/audit/internal/infra/writer.go",
+        "proto/audit/v1/audit.proto"
       ]
     }
   ]

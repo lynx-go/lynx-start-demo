@@ -8,7 +8,7 @@ import (
 
 	"github.com/lynx-go/lynx-start-demo/modules/identity/domain"
 	"github.com/lynx-go/lynx-start-demo/modules/identity/internal/infra/migrations"
-	"github.com/lynx-go/lynx-start/kernel/testutil"
+	"github.com/lynx-go/lynx-start/contrib/bunx/testutil"
 )
 
 func newTestUser(t *testing.T, email string) *identity.User {

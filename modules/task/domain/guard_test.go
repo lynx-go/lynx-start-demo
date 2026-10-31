@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/lynx-go/lynx-start/kernel/testutil"
+	"github.com/lynx-go/lynx-start/contrib/bunx/testutil"
 )
 
 // TestDomainPurity 契约②护栏：domain 层不得 import 本应用的 app/infra/api 层

@@ -1,10 +1,15 @@
-// lynx-start-demo 服务入口：装配已安装的 lynx-start 模块并托管生命周期。
-// 本文件由 lynx-start init 生成，后续基本不再变——模块增减只改 internal/modules。
+// lynx-start-demo 服务入口：装配已安装的 lynx-mods 模块并托管生命周期。
+// 本文件由 lynx-mods init 生成，后续基本不再变——模块增减只改 modules/modules.go。
 package main
 
 import (
 	"context"
+	"fmt"
 	"log/slog"
+	"os"
+	"sort"
+	"strings"
+	"text/tabwriter"
 	"time"
 
 	"github.com/lynx-go/lynx"
@@ -12,11 +17,16 @@ import (
 	"github.com/lynx-go/lynx/contrib/zap"
 
 	grpcapiauthn "github.com/lynx-go/grpcapi/authn"
-	grpcapiinterceptor "github.com/lynx-go/grpcapi/interceptor"
+	grpcapiopenapi "github.com/lynx-go/grpcapi/openapi"
 	grpcapipolicy "github.com/lynx-go/grpcapi/policy"
 	grpcapiprotopolicy "github.com/lynx-go/grpcapi/policy/protopolicy"
 	grpcapiserver "github.com/lynx-go/grpcapi/server"
-	"github.com/lynx-go/lynx-start/kernel"
+	"github.com/lynx-go/lynx-start"
+	"github.com/lynx-go/lynx-start/chain"
+	"github.com/lynx-go/lynx-start/compose"
+	"google.golang.org/genproto/googleapis/api/annotations"
+	"google.golang.org/protobuf/proto"
+	"google.golang.org/protobuf/reflect/protoreflect"
 
 	"github.com/lynx-go/lynx-start-demo/internal/bootstrap"
 	"github.com/lynx-go/lynx-start-demo/internal/config"
@@ -49,7 +59,7 @@ func setup(app lynx.App) error {
 	app.OnPostStop(cleanup)
 
 	installed := modules.Installed()
-	agg, err := kernel.AssembleAll(deps, installed)
+	agg, err := compose.AssembleAll(deps, installed)
 	if err != nil {
 		return err
 	}
@@ -63,13 +73,12 @@ func setup(app lynx.App) error {
 	// 模块贡献的认证后增强器（access 的 roles/permissions claims 等）。
 	authnOpts := grpcapiauthn.Options{Enrichers: agg.Enrichers}
 
-	// 模块贡献的拦截器槽位（audit/ratelimit/usage 等）插入默认链。
-	var chain *grpcapiinterceptor.Chain
-	if len(agg.Stages) > 0 {
-		chain, err = grpcapiinterceptor.AssembleWith(grpcapiinterceptor.DefaultChainOptions(), agg.Stages...)
-		if err != nil {
-			return err
-		}
+	// 模块贡献拦截器 Stage（audit=50 等）时接管链构建——复刻 server 默认链
+	// 的知识在 chain.DefaultChain（I-08：修复经 kernel semver 推送，
+	// scaffold 生成物不再持有这段易错逻辑）。
+	chain, err := chain.DefaultChain(logger, set, agg, authnOpts)
+	if err != nil {
+		return err
 	}
 
 	srv, err := grpcapiserver.New(app.Context(), grpcapiserver.Config{
@@ -82,12 +91,15 @@ func setup(app lynx.App) error {
 		GRPCAddr:             cfg.Server.GRPCAddr,
 		HTTPAddr:             cfg.Server.HTTPAddr,
 		AllowNoAuthenticator: len(agg.Authenticators) == 0,
+		OpenAPI:              &grpcapiopenapi.Info{Title: "lynx-start-demo", Version: "v1"},
 		Logger:               logger,
 	})
 	if err != nil {
 		return err
 	}
 	app.Register(bootstrap.NewAPIService(srv, logger))
+
+	printRouteTable(installed, set)
 
 	if len(agg.Tasks) > 0 {
 		scheduler, err := schedule.NewScheduler(agg.Tasks)
@@ -101,7 +113,7 @@ func setup(app lynx.App) error {
 }
 
 func buildPolicies(ctx context.Context, installed []kernel.InstalledModule) (*grpcapipolicy.Set, error) {
-	files := kernel.PolicyFiles(kernel.Descriptors(installed))
+	files := compose.PolicyFiles(compose.Descriptors(installed))
 	if len(files) == 0 {
 		return grpcapipolicy.NewSet()
 	}
@@ -109,4 +121,73 @@ func buildPolicies(ctx context.Context, installed []kernel.InstalledModule) (*gr
 		Provider: grpcapiprotopolicy.New(grpcapiprotopolicy.Options{}),
 		Registry: grpcapipolicy.DefaultRegistry(),
 	})
+}
+
+// printRouteTable 启动期打印 HTTP 路由表（proto 的 google.api.http 注解驱动），
+// 免去翻 proto 找路径：方法、路径、RPC 全名与认证要求一屏可见。手写的
+// ExtraRoutes 与 gRPC 面（:9060）不在此列。
+func printRouteTable(installed []kernel.InstalledModule, set *grpcapipolicy.Set) {
+	type routeRow struct{ method, path, rpc, auth string }
+	var rows []routeRow
+	for _, fd := range compose.PolicyFiles(compose.Descriptors(installed)) {
+		services := fd.Services()
+		for i := 0; i < services.Len(); i++ {
+			sd := services.Get(i)
+			methods := sd.Methods()
+			for j := 0; j < methods.Len(); j++ {
+				md := methods.Get(j)
+				rpcName := string(sd.FullName()) + "/" + string(md.Name())
+				auth := "auth"
+				if set.IsAnonymous("/" + rpcName) {
+					auth = "anonymous"
+				}
+				for _, hr := range httpRules(md) {
+					rows = append(rows, routeRow{method: hr[0], path: hr[1], rpc: rpcName, auth: auth})
+				}
+			}
+		}
+	}
+	if len(rows) == 0 {
+		return
+	}
+	sort.Slice(rows, func(a, b int) bool { return rows[a].path < rows[b].path })
+	w := tabwriter.NewWriter(os.Stdout, 2, 0, 2, ' ', 0)
+	fmt.Fprintln(w, "HTTP routes:")
+	for _, r := range rows {
+		fmt.Fprintf(w, "  %s\t%s\t%s\t%s\n", r.method, r.path, r.rpc, r.auth)
+	}
+	_ = w.Flush()
+}
+
+// httpRules 抽取方法的 google.api.http 注解（primary 与 additional_bindings）。
+func httpRules(md protoreflect.MethodDescriptor) [][2]string {
+	if md.Options() == nil {
+		return nil
+	}
+	rule, ok := proto.GetExtension(md.Options(), annotations.E_Http).(*annotations.HttpRule)
+	if !ok || rule == nil {
+		return nil
+	}
+	add := func(r *annotations.HttpRule, out *[][2]string) {
+		switch p := r.Pattern.(type) {
+		case *annotations.HttpRule_Get:
+			*out = append(*out, [2]string{"GET", p.Get})
+		case *annotations.HttpRule_Put:
+			*out = append(*out, [2]string{"PUT", p.Put})
+		case *annotations.HttpRule_Post:
+			*out = append(*out, [2]string{"POST", p.Post})
+		case *annotations.HttpRule_Delete:
+			*out = append(*out, [2]string{"DELETE", p.Delete})
+		case *annotations.HttpRule_Patch:
+			*out = append(*out, [2]string{"PATCH", p.Patch})
+		case *annotations.HttpRule_Custom:
+			*out = append(*out, [2]string{strings.ToUpper(p.Custom.GetKind()), p.Custom.GetPath()})
+		}
+	}
+	var out [][2]string
+	add(rule, &out)
+	for _, ab := range rule.GetAdditionalBindings() {
+		add(ab, &out)
+	}
+	return out
 }

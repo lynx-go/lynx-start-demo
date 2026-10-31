@@ -10,9 +10,9 @@ import (
 
 	"github.com/lynx-go/lynx-start-demo/modules/session/domain"
 	appsession "github.com/lynx-go/lynx-start-demo/modules/session/internal/app"
-	"github.com/lynx-go/lynx-start/kernel/clock"
-	"github.com/lynx-go/lynx-start/kernel/events"
-	"github.com/lynx-go/lynx-start/kernel/jwt"
+	"github.com/lynx-go/lynx-start/clock"
+	"github.com/lynx-go/lynx-start/events"
+	"github.com/lynx-go/lynx-start/jwt"
 	"github.com/lynx-go/lynx/eventbus"
 )
 

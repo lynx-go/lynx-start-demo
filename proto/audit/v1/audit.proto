@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package audit.v1;
+
+option go_package = "github.com/lynx-go/lynx-start-demo/genproto/audit/v1;auditv1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "grpcapi/v1/policy.proto";
+
+// 公开 API 面 + 文件级默认公开曝光；逐方法显式收紧。
+option (grpcapi.v1.api) = { api: "public", default_exposure: EXPOSURE_PUBLIC };
+
+// AuditService 是审计模块的 API 面：显式记录 + 查询。RPC 自动审计由
+// 拦截器承担（Order=50，kernel 预留槽位），不经此 service。
+service AuditService {
+  // Record 显式记录一条审计（与调用方业务同事务）；任何已认证主体可记录
+  // 自己的动作——actor 取自认证主体，不可伪造他人。
+  rpc Record(RecordRequest) returns (AuditRecord) {
+    option (grpcapi.v1.method) = { policy: { authenticated: true } };
+    option (google.api.http) = { post: "/v1/audit:record" body: "*" };
+  }
+  // ListAuditRecords 查询审计（occurred_at 降序、分页）；读取是管理面，
+  // 声明 audit.log.read 权限（access 模块 claims 承载）。
+  rpc ListAuditRecords(ListAuditRecordsRequest) returns (ListAuditRecordsResponse) {
+    option (grpcapi.v1.method) = { policy: { permissions: ["audit.log.read"] } };
+    option (google.api.http) = { get: "/v1/audit/records" };
+  }
+}
+
+// AuditRecord 是审计记录（append-only；payload 是业务自定义 JSON 文本）。
+message AuditRecord {
+  string id = 1;
+  string actor_id = 2;
+  string actor_email = 3;
+  string action = 4;
+  string resource_type = 5;
+  string resource_id = 6;
+  string payload = 7;
+  string source = 8;
+  google.protobuf.Timestamp occurred_at = 9;
+}
+
+message RecordRequest {
+  string action = 1;
+  string resource_type = 2;
+  string resource_id = 3;
+  string payload = 4;
+}
+
+message ListAuditRecordsRequest {
+  int32 page_size = 1;
+  string page_token = 2;
+  string actor_id = 3;
+  string action = 4;
+  string resource_type = 5;
+  string resource_id = 6;
+}
+
+message ListAuditRecordsResponse {
+  repeated AuditRecord records = 1;
+  string next_page_token = 2;
+  int32 total_size = 3;
+}

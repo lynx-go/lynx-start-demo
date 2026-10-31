@@ -12,10 +12,11 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/lynx-go/grpcapi/authn"
 	"github.com/lynx-go/grpcapi/server"
-	"github.com/lynx-go/lynx-start/kernel"
-	"github.com/lynx-go/lynx-start/kernel/clock"
-	"github.com/lynx-go/lynx-start/kernel/configkit"
-	"github.com/lynx-go/lynx-start/kernel/jwt"
+	"github.com/lynx-go/lynx-start"
+	"github.com/lynx-go/lynx-start/clock"
+	"github.com/lynx-go/lynx-start/configkit"
+	"github.com/lynx-go/lynx-start/contrib/bunx"
+	"github.com/lynx-go/lynx-start/jwt"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/reflect/protoreflect"
 )
@@ -35,7 +36,7 @@ func Module() kernel.Module {
 			Defaults: map[string]any{
 				"secret":    appidentity.DefaultDevSecret,
 				"token_ttl": "30m",
-				"issuer":    "lynx-start",
+				"issuer":    "lynx-mods",
 			},
 		},
 	}
@@ -60,7 +61,7 @@ func Assemble(deps kernel.Deps) (kernel.Assembly, error) {
 	signer := jwt.NewSigner(cfg.Secret, appidentity.PurposeAccessToken, cfg.Issuer, cfg.TokenTTL, clock.System{})
 	verifier := jwt.NewVerifier(cfg.Secret, appidentity.PurposeAccessToken, cfg.Issuer)
 
-	repo := infraindentity.NewRepository(deps.DB)
+	repo := infraindentity.NewRepository(bunx.MustDB(deps))
 	uc := appidentity.New(repo, deps.Tx, deps.Events, signer, verifier, clock.System{})
 	return kernel.Assembly{
 		Registrations:  []server.Registration{newRegistration(NewService(uc))},
